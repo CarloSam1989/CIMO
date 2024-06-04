@@ -1,0 +1,30 @@
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+main, footer {
+  padding: 20px;
+  text-align: center;
+}
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px;
+  text-align: center;
+
+} 
+main {
+  padding: 40px;
+  background-color: #f1f1f1;
+  min-height: 60vh; /* Ensure main takes enough space */
+}
+footer {
+  background-color: #333;
+  color: white;
+}
+.row-medio{
+  padding: 5px;
+  text-align: center;
+}
