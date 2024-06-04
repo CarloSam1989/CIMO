@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
     <style>
+        body {
+            background-image: url('img/logocimo.ico');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
         .login-container {
             background-color: rgba(255, 255, 255, 0.8);
         }
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        .logo-container img {
-            width: 50px;
-            height: 50px;
+        .login-container .form-label, 
+        .login-container .btn, 
+        .login-container h2 {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -39,9 +41,6 @@
                 <button type="submit" class="btn btn-primary w-100">Entrar</button>
             </form>
         </div>
-    </div>
-    <div class="logo-container position-fixed top-50 start-50 translate-middle">
-        <img src="img/logocimo.ico" alt="Logo CIMO">
     </div>
 </body>
 </html>
