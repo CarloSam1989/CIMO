@@ -5,29 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIMO</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
-    <style>
-        body {
-            background-image: url('img/logocimo.ico');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-        .login-container .form-label, 
-        .login-container .btn, 
-        .login-container h2 {
-            font-weight: bold;
-        }
-    </style>
+    
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card p-4 shadow-lg login-container" style="width: 100%; max-width: 400px;">
+        <div class="card p-4 shadow login-container" style="width: 100%; max-width: 400px;">
+            <div class="text-center mb-4">
+                <img class="img-rounded" src="img/logocimo.ico" style="width: 50%;" class="shadow-sm">
+            </div>
             <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
             <form>
                 <div class="mb-3">
@@ -38,7 +24,7 @@
                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="" autocomplete="off">
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                <button type="submit" class="btn btn-primary btn-block" style="padding: 10px;">Entrar</button>
             </form>
         </div>
     </div>
