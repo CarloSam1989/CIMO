@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
+    <style>
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .logo-container img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px;">
+        <div class="card p-4 shadow-lg login-container" style="width: 100%; max-width: 400px;">
             <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
             <form>
                 <div class="mb-3">
@@ -23,8 +38,10 @@
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Entrar</button>
             </form>
-            <img src="img/logocimo.ico" style="position: fixed; bottom: 10px; right: 10px;" alt="Logo CIMO">
         </div>
+    </div>
+    <div class="logo-container position-fixed top-50 start-50 translate-middle">
+        <img src="img/logocimo.ico" alt="Logo CIMO">
     </div>
 </body>
 </html>
