@@ -6,6 +6,8 @@
     <title>CIMO</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
+    <link rel="stylesheet" href="css/carrusel.css">
+    <link rel="stylesheet" href="css/footer.css">
   </head>
 <body>
     <header>
@@ -52,51 +54,32 @@
           
     </header>
     <main>
-    </main>
-  
-    <style>
-      #carouselExample {
-        width: 100vw; 
-        margin: 0 auto; 
-      }
-      .carousel-inner img {
-        height: calc(100vh - 100px); 
-        object-fit: cover;
-      }
-    </style>
-    
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="img/imagen1.jpg" class="d-block w-100" alt="...">
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="img/imagen1.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="img/imagen2.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="img/imagen3.jpg" class="d-block w-100" alt="...">
+          </div>
         </div>
-        <div class="carousel-item">
-          <img src="img/imagen2.jpg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="img/imagen3.jpg" class="d-block w-100" alt="...">
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    
-    <script>
-      var myCarousel = document.querySelector('#carouselExample')
-      var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 1000 
-      });
-    </script>
-    
+    </main>
     <footer class="text-center">
       <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="js/carrusel.js"></script>
 </body>
 </html>
