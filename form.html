@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modales con Efecto Pop</title>
+  <link rel="stylesheet" href="css/form.css">
+</head>
+<body>
+
+<!-- Botón para abrir el modal de registro de persona -->
+<button id="openPersonModalBtn">REGISTRO</button>
+
+<!-- Modal de Registro de Persona -->
+
+<div id="personModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>REGISTRO DE PERSONA</h2>
+    <form id="personForm">
+      <label for="name">Nombres:</label>
+      <input class="texto" type="text" id="name" name="name" required>
+      <label for="telefono">Telefono:</label>
+      <input class="texto" type="phone" id="telefono" name="telefono" required>
+      <label for="email">Email:</label>
+      <input class="texto" type="email" id="email" name="email" required><br><br>
+      <button type="submit">Registrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Botón para abrir el modal de contenido con select -->
+<button id="openContentModalBtn">CONTENIDO</button>
+
+<!-- Modal de Contenido con Select -->
+<div id="contentModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>SELECCIONA EL CONTENIDO</h2>
+    <select id="selectContent">
+      <option value="option1">Opción 1</option>
+      <option value="option2">Opción 2</option>
+      <option value="option3">Opción 3</option>
+      <option value="option3">Opción 4</option>
+    </select>
+    <button id="selectBtn">Seleccionar</button>
+  </div>
+</div>
+
+<script src="js/form.js"></script>
+</body>
+</html>
