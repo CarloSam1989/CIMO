@@ -1,0 +1,80 @@
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+main, footer {
+  padding: 20px;
+  text-align: center;
+}
+
+header {
+  padding: 0;
+  text-align: center;
+
+} 
+main {
+  padding: 40px;
+  min-height: 60vh; /* Ensure main takes enough space */
+}
+footer {
+  color: white;
+}
+.row-medio{
+  padding:  5px;
+  text-align: center;
+}
+#carouselExample {
+  max-width: 100vh; /* Ajusta este valor según tus necesidades */
+  margin: auto; /* Centra el carrusel */
+}
+.carousel-inner img {
+  width: 100%; /* Asegura que las imágenes se ajusten al nuevo tamaño del carrusel */
+  height: auto; /* Mantiene la proporción de las imágenes */
+}
+
+.col-tam {
+  max-width: 400px; /* Ajusta el ancho máximo de la columna */
+  margin: auto; /* Centra la columna dentro de su contenedor */
+}
+
+
+.full-width-table {
+  width: 100%;
+}
+.table-primary th {
+  font-size: 1px; /* Ajusta el grosor del texto dentro de la celda */
+  padding: 5px; /* Ajusta el padding para controlar el grosor de la celda */
+}
+.card-custom {
+  width: 100%; /* Ajusta el ancho de la tarjeta */
+  height: auto; /* Ajusta automáticamente la altura */
+  max-width: 250px; /* Ajusta este valor según el tamaño deseado de la tarjeta */
+  margin: auto; /* Centra la tarjeta dentro de la columna */
+}
+.card-custom svg {
+  height: 150px; /* Ajusta la altura del SVG */
+}
+.no-gutters {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+.no-gutters > [class*='col-'] {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+.col-6.center-vertical {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ajusta la altura según sea necesario */
+}
+
+
+
+
+
+
+
+
