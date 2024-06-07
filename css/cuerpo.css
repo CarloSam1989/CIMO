@@ -17,6 +17,16 @@ body {
   height: auto;
   margin-right: 10px; /* Espacio entre el logo y el texto */
 }
+/* Estilos para el acordeón */
+.accordion-container {
+  width: 30%; /* Fijar ancho del acordeón */
+  margin: 10px; /* Margen pequeño alrededor del acordeón */
+}
+
+.accordion {
+  max-height: 100vh; /* Ocupa toda la altura de la ventana */
+  overflow-y: auto; /* Añadir scroll si el contenido es mayor que la altura */
+}
 
 /* Estilos para el divisor */
 .divisor {
@@ -32,7 +42,7 @@ body {
 }
 /* Estilos para la sección de tarjetas */
 .section-cards {
-  display: flex;
+  display: flex; 
   justify-content: center; /* Centrar todo el contenido horizontalmente */
   align-items: center; /* Alinear todo el contenido verticalmente */
   margin: 0 auto; /* Centrar la sección en la página */
@@ -43,22 +53,67 @@ body {
   justify-content: space-between; /* Espacio entre tarjetas y acordeón */
   gap: 10px; /* Espacio pequeño entre tarjetas */
 }
-
+/* Esrilos de las tarjetas de noticias */
 .card {
-  max-width: 20rem;
-  margin: 10px; /* Margen pequeño entre tarjetas */
+  padding: 20px;
+  width: 330px;
+  min-height: 370px;
+  border-radius: 20px;
+  background: #e8e8e8;
+  box-shadow: 5px 5px 6px #dadada, -5px -5px 6px #f6f6f6;
+  transition: 0.4s;
+  margin: 10px; /* Agrega un margen para separación entre tarjetas */
+  display: inline-block; /* Asegura que las tarjetas se comporten como elementos en línea */
+  vertical-align: top; /* Alinea las tarjetas en la parte superior */
+
 }
 
-/* Estilos para el acordeón */
-.accordion-container {
-  width: 30%; /* Fijar ancho del acordeón */
-  margin: 10px; /* Margen pequeño alrededor del acordeón */
+.card:hover {
+  translate: 0 -10px;
 }
 
-.accordion {
-  max-height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow-y: auto; /* Añadir scroll si el contenido es mayor que la altura */
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 15px 0 0 10px;
 }
+
+.card-image {
+  min-height: 170px;
+  background-color: #c9c9c9;
+  border-radius: 15px;
+  box-shadow: inset 8px 8px 10px #c3c3c3, inset -8px -8px 10px #cfcfcf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px; /* Agrega un margen inferior para separación entre la imagen y el contenido de la tarjeta */
+
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+}
+
+.card-body {
+  margin: 13px 0 0 10px;
+  color: rgb(31, 31, 31);
+  font-size: 15px;
+}
+
+.footer {
+  float: right;
+  margin: 28px 0 0 18px;
+  font-size: 13px;
+  color: #636363;
+}
+
+.by-name {
+  font-weight: 700;
+}
+
+
 /* Estilos para el footer */
 footer {
   background-color: #343a40;
