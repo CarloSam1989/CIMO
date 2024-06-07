@@ -1,0 +1,38 @@
+
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-facebook {
+    background-color: #1877F2;
+    border-color: #1877F2;
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+}
+.btn-facebook:hover, .btn-facebook:focus {
+    background-color: #1877F2;
+    color: #ffffff;
+}
+.btn-eliminar {
+    background-color: #FF0000;
+    border-color: #FF0000;
+    color: #ffffff;
+    font-size: 18px;
+}
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+    width: 300px;
+    max-width: calc(100% - 20px);
+}
+.navbar {
+    margin-bottom: 0;
+}

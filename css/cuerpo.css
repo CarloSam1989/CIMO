@@ -1,0 +1,140 @@
+/* CSS */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+}
+  
+body {
+    display: flex;
+    flex-direction: column;
+}
+  
+
+  /* Estilos para el divisor */
+.divisor {
+    width: 100%; /* Ocupa todo el ancho de la página */
+    height: 50px; /* Altura pequeña */
+
+    color: #fff; /* Color del texto */
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    position: relative; /* Posicionar relativo para que se sitúe bajo el main */
+    top: 0; /* Ajustar según sea necesario */
+}
+/* Estilos para la sección de tarjetas */
+.section-cards {
+    display: flex;
+    justify-content: center; /* Centrar todo el contenido horizontalmente */
+    align-items: center; /* Alinear todo el contenido verticalmente */
+    margin: 0 auto; /* Centrar la sección en la página */
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre tarjetas y acordeón */
+    gap: 10px; /* Espacio pequeño entre tarjetas */
+  }
+  
+  .card {
+    max-width: 20rem;
+    margin: 10px; /* Margen pequeño entre tarjetas */
+  }
+  
+  /* Estilos para el acordeón */
+  .accordion-container {
+    width: 30%; /* Fijar ancho del acordeón */
+    margin: 10px; /* Margen pequeño alrededor del acordeón */
+  }
+  
+  .accordion {
+    max-height: 100vh; /* Ocupa toda la altura de la ventana */
+    overflow-y: auto; /* Añadir scroll si el contenido es mayor que la altura */
+  }
+/* Estilos para el footer */
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.lorem-text {
+    flex: 1;
+    margin-right: 20px;
+    text-align: justify;
+}
+
+.form {
+    background-color: #fff;
+    display: block;
+    padding: 1rem;
+    max-width: 350px;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+  }
+  
+  .input-container {
+    position: relative;
+  }
+  
+  .input-container input, .form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+  }
+  
+  .input-container input {
+    background-color: #fff;
+    padding: 1rem;
+    padding-right: 3rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 300px;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .submit {
+    display: block;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    background-color: #071f63;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+  }
+  
+  .signup-link {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: center;
+  }
+  
+  .signup-link a {
+    text-decoration: underline;
+  }
