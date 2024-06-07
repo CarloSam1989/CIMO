@@ -7,50 +7,51 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">ç
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/tabla .css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">CIMO</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav me-auto">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                      <span class="visually-hidden">(current)</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Noticias</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Contactos</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Acerca de</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Más</a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Acción</a>
-                      <a class="dropdown-item" href="#">Otra acción</a>
-                      <a class="dropdown-item" href="#">Algo más aquí</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Enlace separado</a>
-                    </div>
-                  </li>
-                </ul>
-                <form class="d-flex">
-                  <a href="https://www.facebook.com/" target="_blank" class="btn btn-facebook btn-circle my-2 my-sm-0"><i class="fab fa-facebook-f"></i></a>
-                </form>
-              </div>
+                <a class="navbar-brand" href="#">CIMO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Home
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Noticias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contactos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Acerca de</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Más</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Acción</a>
+                                <a class="dropdown-item" href="#">Otra acción</a>
+                                <a class="dropdown-item" href="#">Algo más aquí</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Enlace separado</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <a href="https://www.facebook.com" target="_blank" class="btn btn-facebook btn-circle my-2 my-sm-0"><i class="fab fa-facebook-f"></i></a>
+                        <a href="login.html" class="btn btn-primary my-2 my-sm-0 ms-2">Login</a>
+                    </form>
+                </div>
             </div>
-          </nav>
+        </nav>
     </header>
     <main class="container mt-4">
         <h2 class="text-center mb-4">Subir Reportes</h2>
@@ -65,6 +66,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Datos de ejemplo -->
                     <tr>
                         <td>1</td>
                         <td>Reporte de ventas</td>
@@ -83,6 +85,7 @@
                             <button class="btn btn-eliminar btn-sm eliminar-btn">Eliminar</button>
                         </td>
                     </tr>
+                    <!-- Agrega más filas según sea necesario -->
                 </tbody>
             </table>
         </div>
@@ -101,8 +104,25 @@
             });
 
             $('#reportes').on('click', '.ver-btn', function() {
-                var data = $(this).closest('tr').find('td');
-                alert('ID: ' + data.eq(0).text() + '\nNombre: ' + data.eq(1).text() + '\nFecha: ' + data.eq(2).text());
+                var tr = $(this).closest('tr');
+                var data = tr.find('td');
+                var details = `
+                    <tr class="details-row">
+                        <td colspan="4">
+                            <table class="table">
+                                <tr><th>ID</th><td>${data.eq(0).text()}</td></tr>
+                                <tr><th>Nombre</th><td>${data.eq(1).text()}</td></tr>
+                                <tr><th>Fecha</th><td>${data.eq(2).text()}</td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                `;
+
+                // Remove existing detail rows
+                tr.next('.details-row').remove();
+
+                // Add the details row after the current row
+                tr.after(details);
             });
 
             $('#reportes').on('click', '.eliminar-btn', function() {
@@ -111,15 +131,18 @@
 
                 $('.btn-se').on('click', function() {
                     if ($(this).hasClass('btn-primary')) {
+                        // Eliminar el reporte
                         row.remove();
                         toast.hide();
+                        // Mostrar notificación de eliminación exitosa
                         $('.toast-eliminado').toast('show');
                     } else if ($(this).hasClass('btn-secondary')) {
+                        // Si el botón es "Cancelar", simplemente cierra el toast.
                         toast.hide();
                     }
                 });
 
-                toast.show(); 
+                toast.show(); // Mostrar la notificación después de configurar los botones.
             });
         });
     </script>
@@ -136,11 +159,16 @@
             </div>
         </div>
     </div>
+    <!-- Notificación de eliminación exitosa -->
     <div class="toast toast-eliminado" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body">
             Se ha eliminado el reporte correctamente.
+            <div class="mt-2 pt-2 border-top">
+                <button type="button" class="btn btn-primary btn-se" data-bs-dismiss="toast">Aceptar</button>
+            </div>
         </div>
     </div>
 </body>
 </html>
 
+    
