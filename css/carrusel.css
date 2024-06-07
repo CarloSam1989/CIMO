@@ -1,8 +1,37 @@
 #carouselExample {
-    width: 100%; 
-    margin: 0 auto; 
-  }
-  .carousel-inner img {
-    height: calc(100vh - 100px); 
-    object-fit: cover;
-  }
+  width: 100%; 
+  margin: 0 auto; 
+}
+.carousel-inner img {
+  height: calc(100vh - 100px); 
+  object-fit: cover;
+}
+.carousel-container {
+  position: relative;
+}
+
+.carousel-title {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 300px; /* Establece el ancho */
+  height: 300px; /* Establece la altura igual al ancho para que sea cuadrado */
+  font-size: 40px; /* Ajusta el tamaño del texto según sea necesario */
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente para mejor legibilidad */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* Centra el texto horizontalmente */
+  padding: 10px;
+  border-radius: 10px; /* Puedes ajustar el radio del borde o eliminarlo para un cuadrado perfecto */
+  z-index: 10;
+}
+
+.carousel-inner img {
+  filter: brightness(0.6); /* Opcional: oscurece las imágenes para resaltar el texto */
+}
