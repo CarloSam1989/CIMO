@@ -1,0 +1,186 @@
+/* CSS para el menú */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilos para el logo en la navbar */
+  .navbar-logo {
+    width: 60px; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+  }
+  
+  /* Estilos para el acordeón */
+  .accordion-container {
+    width: 30%; /* Fijar ancho del acordeón */
+    margin: 10px; /* Margen pequeño alrededor del acordeón */
+  }
+  
+  .accordion {
+    max-height: 100vh; /* Ocupa toda la altura de la ventana */
+    overflow-y: auto; /* Añadir scroll si el contenido es mayor que la altura */
+  }
+  
+  /* Estilos para el divisor */
+  .divisor {
+    width: 100%; /* Ocupa todo el ancho de la página */
+    height: 50px; /* Altura pequeña */
+    color: #fff; /* Color del texto */
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    position: relative; /* Posicionar relativo para que se sitúe bajo el main */
+    top: 0; /* Ajustar según sea necesario */
+  }
+  
+  /* Estilos para la sección de tarjetas */
+  .section-cards {
+    display: flex; 
+    justify-content: center; /* Centrar todo el contenido horizontalmente */
+    align-items: center; /* Alinear todo el contenido verticalmente */
+    margin: 0 auto; /* Centrar la sección en la página */
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre tarjetas y acordeón */
+    gap: 10px; /* Espacio pequeño entre tarjetas */
+  }
+  
+  /* Esrilos de las tarjetas de noticias */
+  .card {
+    padding: 20px;
+    width: 330px;
+    min-height: 370px;
+    border-radius: 20px;
+    background: #e8e8e8;
+    box-shadow: 5px 5px 6px #dadada, -5px -5px 6px #f6f6f6;
+    transition: 0.4s;
+    margin: 10px; /* Agrega un margen para separación entre tarjetas */
+    display: inline-block; /* Asegura que las tarjetas se comporten como elementos en línea */
+    vertical-align: top; /* Alinea las tarjetas en la parte superior */
+  }
+  
+  .card:hover {
+    translate: 0 -10px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 15px 0 0 10px;
+  }
+  
+  .card-image {
+    min-height: 170px;
+    background-color: #c9c9c9;
+    border-radius: 15px;
+    box-shadow: inset 8px 8px 10px #c3c3c3, inset -8px -8px 10px #cfcfcf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px; /* Agrega un margen inferior para separación entre la imagen y el contenido de la tarjeta */
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+  
+  .card-body {
+    margin: 13px 0 0 10px;
+    color: rgb(31, 31, 31);
+    font-size: 15px;
+  }
+  
+  /* Estilos para el botón social */
+  .boton-social {
+    position: relative;
+    width: 130px;
+    height: 35px;
+    border-radius: 30px;
+    background-color: white;
+    border: 1px #3a5ba2 solid;
+    overflow: hidden;
+    margin-right: 10px; /* Margen derecho para separación */
+  }
+  
+  .boton-social .text1 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 22%;
+  }
+  
+  .boton-social .text2 {
+    position: absolute;
+    top: 25%;
+    left: -50px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+  }
+  
+  .boton-social .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s;
+  }
+  
+  .boton-social .icon::before {
+    position: absolute;
+    left: -100px;
+    top: 0;
+    z-index: -1;
+    content: '';
+    width: 130px;
+    height: 33px;
+    border-radius: 30px;
+    background-color: #3a5ba2;
+  }
+  
+  .boton-social:hover .icon {
+    transform: translateX(96px);
+    transition: transform 0.5s;
+  }
+  
+  .boton-social:hover .text2 {
+    transform: translateX(100px);
+    transition: transform 0.6s;
+  }
+  
+  .boton-social:active {
+    transform: scale(1.03);
+  }
+  
+  /* Estilos para el botón de login */
+  .btn-login {
+    background-color: #000; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    padding: 0.5em 1.5em;
+    border-radius: 30px;
+    border: none; /* Sin borde */
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  .btn-login:hover {
+    background-color: #fff; /* Fondo blanco al pasar el mouse */
+    color: #000; /* Texto negro al pasar el mouse */
+  }
+  
+  .btn-login .icon {
+    margin-right: 0.5em;
+  }
+  
