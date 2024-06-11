@@ -101,6 +101,7 @@ body {
   margin: 13px 0 0 10px;
   color: rgb(31, 31, 31);
   font-size: 15px;
+  text-align: justify;
 }
 
 
@@ -187,3 +188,24 @@ body {
 .btn-login .icon {
   margin-right: 0.5em;
 }
+
+footer {
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px; 
+}
+
+.footer-copyright {
+  margin-top: 50px; /* Ajusta este valor según necesites más o menos espacio */
+  text-align: center; /* Centrar el texto si es necesario */
+  font-size: 14px; /* Tamaño de fuente */
+}
+
