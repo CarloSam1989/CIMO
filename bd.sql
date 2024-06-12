@@ -66,3 +66,18 @@ CREATE TABLE `contenido` (
 # Data for table "contenido"
 #
 
+#
+# Structure for table "bolsa de trabajo"
+#
+
+DROP TABLE IF EXISTS `contenido`;
+
+#
+# Data for table "bolsa de trabajo"
+#
+
+
+
+
+
+
