@@ -1,4 +1,5 @@
 <?php
+// Incluir el archivo bd.php para tener acceso a la función login()
 include 'bd.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
