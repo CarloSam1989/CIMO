@@ -66,3 +66,32 @@ CREATE TABLE `contenido` (
 # Data for table "contenido"
 #
 
+
+#
+# Structure for table "bolsa de trabajo"
+#
+
+DROP TABLE IF EXISTS `bolsa de trabajo`;
+CREATE TABLE `contenido` (
+ CREATE TABLE bolsa_de_trabajo (
+    'CurriculumVitae' NVARCHAR(255),
+    'CartasRecomendacion' NVARCHAR(50),
+    'TarjetasPresentacion' NVARCHAR(50),
+    'BlocNotasBoligrafos' NVARCHAR(50),
+    'DispositivoElectronico' NVARCHAR(50),
+    'DocumentosIdentificacion' NVARCHAR(50),
+    'AguaSnacks' NVARCHAR(50),
+    'ArticulosAseoPersonal' NVARCHAR(50),
+    'MapaDirecciones' NVARCHAR(50),
+    'Portafolio' NVARCHAR(50))
+);
+
+#
+# Data for table "bolsa de trabajo"
+#
+
+
+
+
+
+
