@@ -15,16 +15,14 @@ if ($conn->connect_error) {
 }
 
 function login($usuario,$pass){
+    $pass = password_hash($pass, PASSWORD_DEFAULT);
     $conexion=conectar();
-    $sql = $conexion->prepare("SELECT * FROM persona WHERE correo = c and password=p ");
-    $sql->bind_param("c", $usuario);
-    $sql->bind_param("p", $pass);
+    $sql = $conexion->prepare("SELECT id_persona as id FROM persona WHERE correo = ? ");
+    $sql->bind_param("s", $usuario);
     $sql->execute();
     $sql->store_result();
     if($sql->num_rows > 0){
-        $sql->bind_result($id, $id_persona);
-        $sql->bind_result($password, $password);
-        $sql->bind_result($correo, $correo);
+        $sql->bind_result($id, $password);
         if(passowrd_verify($pass, $password)){
             session_start();
             $_SESSION['id']=$id;
