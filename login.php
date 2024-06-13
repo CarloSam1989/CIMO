@@ -2,7 +2,7 @@
 include 'obj/bd.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['usuario']) && isset($_POST['pass'])) {
+    if(isset($_POST['usuario']) && isset($_POST['pass'])){
         $usuario = $_POST['usuario'];
         $pass = $_POST['pass'];
 

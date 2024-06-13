@@ -26,7 +26,8 @@ function login($usuario, $pass){
         $sql->bind_result($id, $hashed_password);
         $sql->fetch();
 
-        if (password_verify($pass, $hashed_password)) {
+        // Comparar la contraseña en texto plano con la encriptada
+        if (md5($pass) == $hashed_password) {
             session_start();
             $_SESSION['id'] = $id;
             return true;
