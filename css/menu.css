@@ -49,7 +49,7 @@ body {
   padding: 20px;
   width: 100%; /* Asegura que las tarjetas usen el 100% del ancho disponible */
   max-width: 330px; /* Define el ancho máximo de las tarjetas */
-  min-height: 370px;
+  height: 500px; /* Define la altura fija de las tarjetas */
   border-radius: 20px;
   background: #e8e8e8;
   box-shadow: 5px 5px 6px #dadada, -5px -5px 6px #f6f6f6;
@@ -60,7 +60,7 @@ body {
 }
 
 .card:hover {
-  translate: 0 -10px;
+  transform: translateY(-10px); /* Corregido de translate: 0 -10px */
 }
 
 .card-title {
@@ -70,7 +70,7 @@ body {
 }
 
 .card-image {
-  min-height: 170px;
+  height: 200px; /* Altura fija para las imágenes */
   background-color: #c9c9c9;
   border-radius: 15px;
   box-shadow: inset 8px 8px 10px #c3c3c3, inset -8px -8px 10px #cfcfcf;
@@ -82,8 +82,9 @@ body {
 
 .card-image img {
   width: 100%;
-  height: auto;
+  height: 100%; /* Asegura que la imagen cubra completamente el contenedor */
   border-radius: 15px;
+  object-fit: cover; /* Asegura que la imagen cubra completamente el contenedor manteniendo la proporción */
 }
 
 .card-body {
@@ -92,7 +93,6 @@ body {
   font-size: 15px;
   text-align: justify;
 }
-
 
 
 /* Estilos para el botón social */

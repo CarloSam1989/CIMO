@@ -1,5 +1,4 @@
 <?php
-
 include 'obj/bd.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
