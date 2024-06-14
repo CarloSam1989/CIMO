@@ -1,0 +1,181 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para el logo en la navbar */
+.navbar-logo {
+  width: 60px; /* Ajusta el tamaño del logo según sea necesario */
+  height: auto;
+  margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+main.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Ajusta la altura para centrar mejor */
+}
+
+.table-responsive {
+  width: 80%; /* Ajusta el tamaño de la tabla al 80% del ancho del contenedor principal */
+  margin: 0 auto; /* Centra la tabla horizontalmente */
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla ocupe todo el ancho del contenedor .table-responsive */
+  border-collapse: collapse; /* Asegura que los bordes de las celdas se colapsen */
+}
+
+.table th,
+.table td {
+  padding: 10px; /* Agrega un poco de padding a las celdas */
+  border: 1px solid #ccc; /* Agrega un borde a las celdas */
+  text-align: center; /* Alinea el texto al centro */
+}
+
+.table th {
+  background-color: #f2f2f2; /* Color de fondo para los encabezados de la tabla */
+}
+
+.table img {
+  max-width: 100px; /* Ajusta el tamaño máximo de las imágenes */
+  height: auto; /* Mantiene la proporción de las imágenes */
+}
+
+
+.botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* CSS para el botón de basura */
+.bin-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: rgb(255, 95, 95);
+  cursor: pointer;
+  border: 3px solid rgb(255, 201, 201);
+  transition-duration: 0.3s;
+}
+
+.bin-bottom {
+  width: 15px;
+}
+
+.bin-top {
+  width: 17px;
+  transform-origin: right;
+  transition-duration: 0.3s;
+}
+
+.bin-button:hover .bin-top {
+  transform: rotate(45deg);
+}
+
+.bin-button:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+.bin-button:active {
+  transform: scale(0.9);
+}
+
+/* CSS para el botón de editar */
+.edit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: rgb(95, 95, 255);
+  cursor: pointer;
+  border: 3px solid rgb(201, 201, 255);
+  transition-duration: 0.3s;
+}
+
+.edit-icon {
+  width: 24px;
+  height: 24px;
+  transition-duration: 0.3s;
+}
+
+.edit-button:hover {
+  background-color: rgb(0, 0, 255);
+}
+
+.edit-button:active {
+  transform: scale(0.9);
+}
+
+/* CSS para el botón de engranaje */
+.gear-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: rgb(95, 255, 95);
+  cursor: pointer;
+  border: 3px solid rgb(201, 255, 201);
+  transition-duration: 0.3s;
+}
+
+.gear-icon {
+  width: 24px;
+  height: 24px;
+  transition-duration: 0.3s;
+}
+
+.gear-button:hover {
+  background-color: rgb(0, 255, 0);
+}
+
+.gear-button:active {
+  transform: scale(0.9);
+}
+
+
+footer {
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px; 
+}
+
+.footer-copyright {
+  margin-top: 50px; /* Ajusta este valor según necesites más o menos espacio */
+  text-align: center; /* Centrar el texto si es necesario */
+  font-size: 14px; /* Tamaño de fuente */
+}
