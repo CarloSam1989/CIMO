@@ -1,6 +1,6 @@
-# Host: localhost  (Version 5.0.45-community-nt)
-# Date: 2024-06-06 21:21:52
-# Generator: MySQL-Front 6.1  (Build 1.26)
+# Host: localhost (Version 5.0.45-community-nt)
+# Date: 2024-06-15
+# Generator: MySQL-Front 6.1 (Build 1.26)
 
 #
 # Structure for table "categoria"
@@ -13,10 +13,6 @@ CREATE TABLE `categoria` (
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-#
-# Data for table "categoria"
-#
 
 #
 # Structure for table "persona"
@@ -36,10 +32,6 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
-# Data for table "persona"
-#
-
-#
 # Structure for table "contenido"
 #
 
@@ -49,19 +41,14 @@ CREATE TABLE `contenido` (
   `id_categoria` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `cuerpo` text NOT NULL,
-  `foto` varchar(255) DEFAULT NULL,
-  `id_persona` int(11) NOT NULL,
+  `foto` varchar(255) NOT NULL,
   `estado` tinyint(1) NOT NULL,
+  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_contenido`),
   KEY `fk_categoria` (`id_categoria`),
-  KEY `fk_persona` (`id_persona`),
-  CONSTRAINT `fk_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Data for table "contenido"
-#
 
 #
 # Structure for table "bolsa_de_trabajo"
