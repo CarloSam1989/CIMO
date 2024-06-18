@@ -1,0 +1,456 @@
+:root {
+  --color-border: #ccc;
+  --color-header-bg: #f2f2f2;
+  --color-trash-bg: rgb(212, 17, 17);
+  --color-trash-border: rgb(255, 201, 201);
+  --color-trash-hover-bg: rgb(255, 82, 82);
+  --color-edit-bg: rgb(22, 22, 248);
+  --color-edit-border: rgb(201, 201, 255);
+  --color-edit-hover-bg: rgb(63, 63, 255);
+  --color-gear-bg: rgb(18, 116, 18);
+  --color-gear-border: rgb(201, 255, 201);
+  --color-gear-hover-bg: rgb(45, 216, 45);
+  --color-footer-bg: #343a40;
+  --color-footer-text: #ffffff;
+  --color-header-title: #000000;
+  --color-button-bg: #0656aa;
+  --color-button-text: #ffffff;
+  --color-button-hover-bg: #0172eb;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para el logo en la navbar */
+.navbar-logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+main.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.table-responsive {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-header-title);
+  color: var(--color-button-text);
+  padding: 10px;
+}
+
+.table-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(  --bg-color);
+}
+  /* css boton agregar noticia */
+:root {
+  --main-focus: #2d8cf0;
+  --font-color: #323232;
+  --bg-color-sub: #dedede;
+  --bg-color: #eee;
+  --main-color: #323232;
+}
+
+.agregar {
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.agregar, .agregar__icon, .agregar__text {
+  transition: all 0.3s;
+}
+
+.agregar .agregar__text {
+  transform: translateX(22px);
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.agregar .agregar__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: var(--bg-color-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agregar .svg {
+  width: 20px;
+  fill: var(--main-color);
+}
+
+.agregar:hover {
+  background: var(--bg-color);
+}
+
+.agregar:hover .agregar__text {
+  color: transparent;
+}
+
+.agregar:hover .agregar__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.agregar:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px var(--main-color);
+}
+
+/* resto del css de la tabla */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.table th {
+  background-color: var(--color-header-bg);
+}
+
+.table img {
+  max-width: 100px;
+  height: auto;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* CSS para el botón de basura */
+.bin-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: var(--color-trash-bg);
+  cursor: pointer;
+  border: 3px solid var(--color-trash-border);
+  transition-duration: 0.3s;
+}
+
+.bin-bottom {
+  width: 15px;
+}
+
+.bin-top {
+  width: 17px;
+  transform-origin: right;
+  transition-duration: 0.3s;
+}
+
+.bin-button:hover .bin-top {
+  transform: rotate(45deg);
+}
+
+.bin-button:hover {
+  background-color: var(--color-trash-hover-bg);
+}
+
+.bin-button:active {
+  transform: scale(0.9);
+}
+
+/* CSS para el botón de editar */
+.edit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: var(--color-edit-bg);
+  cursor: pointer;
+  border: 3px solid var(--color-edit-border);
+  transition-duration: 0.3s;
+}
+
+.edit-icon {
+  width: 24px;
+  height: 24px;
+  transition-duration: 0.3s;
+}
+
+.edit-button:hover {
+  background-color: var(--color-edit-hover-bg);
+}
+
+.edit-button:active {
+  transform: scale(0.9);
+}
+
+/* CSS para el botón de engranaje */
+.gear-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: var(--color-gear-bg);
+  cursor: pointer;
+  border: 3px solid var(--color-gear-border);
+  transition-duration: 0.3s;
+}
+
+.gear-icon {
+  width: 24px;
+  height: 24px;
+  transition-duration: 0.3s;
+}
+
+.gear-button:hover {
+  background-color: var(--color-gear-hover-bg);
+}
+
+.gear-button:active {
+  transform: scale(0.9);
+}
+
+/* css para el modal de agregar */
+:root {
+  --main-focus: #2d8cf0;
+  --font-color: #323232;
+  --bg-color-sub: #dedede;
+  --bg-color: #eee;
+  --main-color: #323232;
+  --modal-bg-color: #fff;
+  --modal-header-bg: #f2f2f2;
+  --modal-header-color: #000;
+  --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+  --button-bg: #000000;
+  --button-text: #fff;
+  --button-hover-bg: #262b31;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--modal-overlay-bg);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--modal-bg-color);
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--modal-header-color);
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+form label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form button[type="submit"] {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%; /* Para que el botón ocupe todo el ancho del contenedor */
+  max-width: 500px; /* Ajusta este valor según tus necesidades */
+  margin: 20px auto 0; /* Para centrar el botón y darle margen superior */
+  display: block; /* Asegura que el botón sea un bloque para centrado automático */
+}
+
+form button[type="submit"]:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* css para el modal eliminar */
+:root {
+  --modal-bg-color: #fff;
+  --modal-header-bg: #f2f2f2;
+  --modal-header-color: #000;
+  --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+  --button-bg: #007bff;
+  --button-text: #fff;
+  --button-hover-bg: #0056b3;
+  --button-cancel-bg: #ffffff;
+  --button-cancel-border: #ccc;
+  --button-cancel-text: #000;
+  --button-cancel-hover-bg: #f2f2f2;
+  --button-delete-bg: #be0202;
+  --button-delete-hover-bg: #fa0303;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--modal-overlay-bg);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--modal-bg-color);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-header h4 {
+  margin: 0;
+  color: var(--modal-header-color);
+}
+
+#viewContent {
+  padding: 20px 0;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancel {
+  background-color: var(--button-cancel-bg);
+  color: var(--button-cancel-text);
+  border: 1px solid var(--button-cancel-border);
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-cancel:hover {
+  background-color: var(--button-cancel-hover-bg);
+}
+
+.btnmodaleliminar {
+  background-color: var(--button-delete-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btnmodaleliminar:hover {
+  background-color: var(--button-delete-hover-bg);
+}
+
+
+
+/* css del footer o pie de página */
+
+footer {
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.footer-copyright {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 14px;
+}
