@@ -148,9 +148,18 @@
       <textarea id="contenido" name="contenido"></textarea>
       <label for="imagen">Subir imagen:</label>
       <input type="file" id="imagen" name="imagen" accept="image/*">
-      <label for="opcion">Tipo:</label>
-      <input type="text" list="opciones" id="opcion" name="opcion">
-      <datalist id="opciones">
+  
+      <label for="opcion">Noticia:</label>
+      <select id="opcion" name="opcion" style="width: 70%; border-radius: 3%; padding: 8px 15px;">
+    <option value="opcion1">Opción 1</option>
+    <option value="opcion2">Opción 2</option>
+    <option value="opcion3">Opción 3</option>
+</select>
+
+</select>
+<button type="button" onclick="agregarTipo()" style="background-color: #FF5733; color: white; border: none; border-radius: 3%; padding: 8px 15px; cursor: pointer;">Agregar Tipo</button>
+
+
         <?php
         require_once 'obj/config.php';
 
