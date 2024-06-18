@@ -24,7 +24,7 @@ function closeModal(modalId) {
 
 // Función para cargar categorías
 function cargarCategorias() {
-  fetch('obj/categorias.php')
+  fetch('noticias.php')
       .then(response => response.json())
       .then(data => {
           const select = document.getElementById('opcion');
@@ -57,18 +57,19 @@ function eliminarNoticia() {
   xhr.send('id=' + id);
 }
 
-const editModal = document.getElementById('editModal');
-const modal = document.getElementById('editModal');
 
-const closeBtn = document.querySelector('.close-btn'); // Selecciona el botón de cierre
+function agregarTipo() {
+  document.getElementById('agregar').style.display = 'block';
+}
 
-editModal.addEventListener('click', () => {
-  modal.style.display = 'block'; // Muestra el modal
-});
+function cerrarModal() {
+  document.getElementById('agregar').style.display = 'none';
+}
 
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none'; // Oculta el modal
-});
-
-
+// Cierra el modal si el usuario hace clic fuera de él
+window.onclick = function(event) {
+  if (event.target == document.getElementById('agregar')) {
+    cerrarModal();
+  }
+}
 
