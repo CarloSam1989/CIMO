@@ -73,3 +73,19 @@ window.onclick = function(event) {
   }
 }
 
+// Abrir el modal al hacer clic en el botón
+document.getElementById('editButton').addEventListener('click', function() {
+  document.getElementById('editModal').style.display = 'block';
+});
+
+// Cerrar el modal al hacer clic en la "X"
+document.querySelector('.close-btn').addEventListener('click', function() {
+  document.getElementById('editModal').style.display = 'none';
+});
+
+// Cerrar el modal al hacer clic fuera de él
+window.addEventListener('click', function(event) {
+  if (event.target == document.getElementById('editModal')) {
+    document.getElementById('editModal').style.display = 'none';
+  }
+});

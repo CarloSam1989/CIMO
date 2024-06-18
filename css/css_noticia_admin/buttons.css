@@ -1,0 +1,150 @@
+.agregar {
+    position: relative;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--main-color);
+    box-shadow: 4px 4px var(--main-color);
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .agregar .agregar__text {
+    transform: translateX(22px);
+    color: var(--font-color);
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .agregar .agregar__icon {
+    position: absolute;
+    transform: translateX(109px);
+    height: 100%;
+    width: 39px;
+    background-color: var(--bg-color-sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  
+  .agregar .svg {
+    width: 20px;
+    fill: var(--main-color);
+  }
+  
+  .agregar:hover {
+    background: var(--bg-color);
+  }
+  
+  .agregar:hover .agregar__text {
+    color: transparent;
+  }
+  
+  .agregar:hover .agregar__icon {
+    width: 148px;
+    transform: translateX(0);
+  }
+  
+  .agregar:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px var(--main-color);
+  }
+  
+  /* Bin Button */
+  .bin-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    background-color: var(--color-trash-bg);
+    cursor: pointer;
+    border: 3px solid var(--color-trash-border);
+    transition-duration: 0.3s;
+  }
+  
+  .bin-bottom {
+    width: 15px;
+  }
+  
+  .bin-top {
+    width: 17px;
+    transform-origin: right;
+    transition-duration: 0.3s;
+  }
+  
+  .bin-button:hover .bin-top {
+    transform: rotate(45deg);
+  }
+  
+  .bin-button:hover {
+    background-color: var(--color-trash-hover-bg);
+  }
+  
+  .bin-button:active {
+    transform: scale(0.9);
+  }
+  
+  /* Edit Button */
+  .edit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    background-color: var(--color-edit-bg);
+    cursor: pointer;
+    border: 3px solid var(--color-edit-border);
+    transition-duration: 0.3s;
+  }
+  
+  .edit-icon {
+    width: 24px;
+    height: 24px;
+    transition-duration: 0.3s;
+  }
+  
+  .edit-button:hover {
+    background-color: var(--color-edit-hover-bg);
+  }
+  
+  .edit-button:active {
+    transform: scale(0.9);
+  }
+  
+  /* Gear Button */
+  .gear-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    background-color: var(--color-gear-bg);
+    cursor: pointer;
+    border: 3px solid var(--color-gear-border);
+    transition-duration: 0.3s;
+  }
+  
+  .gear-icon {
+    width: 24px;
+    height: 24px;
+    transition-duration: 0.3s;
+  }
+  
+  .gear-button:hover {
+    background-color: var(--color-gear-hover-bg);
+  }
+  
+  .gear-button:active {
+    transform: scale(0.9);
+  }
+  

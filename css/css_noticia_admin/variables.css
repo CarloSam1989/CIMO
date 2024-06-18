@@ -1,0 +1,38 @@
+:root {
+    --color-border: #ccc;
+    --color-header-bg: #f2f2f2;
+    --color-trash-bg: rgb(212, 17, 17);
+    --color-trash-border: rgb(255, 201, 201);
+    --color-trash-hover-bg: rgb(255, 82, 82);
+    --color-edit-bg: rgb(22, 22, 248);
+    --color-edit-border: rgb(201, 201, 255);
+    --color-edit-hover-bg: rgb(63, 63, 255);
+    --color-gear-bg: rgb(18, 116, 18);
+    --color-gear-border: rgb(201, 255, 201);
+    --color-gear-hover-bg: rgb(45, 216, 45);
+    --color-footer-bg: #343a40;
+    --color-footer-text: #ffffff;
+    --color-header-title: #000000;
+    --color-button-bg: #0656aa;
+    --color-button-text: #ffffff;
+    --color-button-hover-bg: #0172eb;
+    --main-focus: #2d8cf0;
+    --font-color: #323232;
+    --bg-color-sub: #dedede;
+    --bg-color: #eee;
+    --main-color: #323232;
+    --modal-bg-color: #fff;
+    --modal-header-bg: #f2f2f2;
+    --modal-header-color: #000;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --button-bg: #000000;
+    --button-text: #fff;
+    --button-hover-bg: #262b31;
+    --button-cancel-bg: #ffffff;
+    --button-cancel-border: #ccc;
+    --button-cancel-text: #000;
+    --button-cancel-hover-bg: #f2f2f2;
+    --button-delete-bg: #be0202;
+    --button-delete-hover-bg: #fa0303;
+  }
+  

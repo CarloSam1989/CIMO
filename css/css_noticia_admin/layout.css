@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+main.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-top: 60px; /* Ajusta según   la altura del nav */
+  width: 100%;
+  margin: 0; /* Asegúrate de que no haya margen */
+  padding: 0; /* Asegúrate de que no haya padding */
+}
+
+
+footer {
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  flex-shrink: 0;
+  position: relative; /* Cambiado de absolute a relative */
+}
+
+/* Ajustar el footer para que se mantenga en la parte inferior */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Noticias-Admin</title>
+  <link rel="stylesheet" href="css/css_noticia_admin/reset.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/variables.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/layout.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/navbar.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/main.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/footer.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/buttons.css">
+  <link rel="stylesheet" href="css/css_noticia_admin/modals.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/noticias.css">
   <link rel="stylesheet" href="css/noticias2.css">
 </head>
 
@@ -107,17 +113,13 @@
                                 <path d="M21 6V29" stroke="white" stroke-width="4"></path>
                               </svg>
                             </button>
-                            <button class="edit-button" id="editModal">
+                            <button class="edit-button" type="button" onclick="openEditModal(' . $row['id_contenido'] . ', \'' . $row['titulo'] . '\', \'' . addslashes($row['cuerpo']) . '\', \'' . $row['foto'] . '\')">
                               <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
                                 <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
                               </svg>
                             </button>
-                            <button class="gear-button">
-                              <svg class="gear-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.43 12.98C19.45 12.66 19.5 12.34 19.5 12C19.5 11.66 19.45 11.34 19.43 11.02L21.54 9.63C21.71 9.52 21.78 9.31 21.71 9.12L19.76 4.98C19.68 4.8 19.48 4.7 19.28 4.76L16.89 5.55C16.42 5.21 15.92 4.91 15.37 4.67L15.03 2.21C15 2 14.81 1.87 14.6 1.87H9.4C9.19 1.87 9 2 8.97 2.21L8.63 4.67C8.08 4.91 7.58 5.21 7.11 5.55L4.72 4.76C4.52 4.7 4.32 4.8 4.24 4.98L2.29 9.12C2.22 9.31 2.29 9.52 2.46 9.63L4.57 11.02C4.55 11.34 4.5 11.66 4.5 12C4.5 12.34 4.55 12.66 4.57 12.98L2.46 14.37C2.29 14.48 2.22 14.69 2.29 14.88L4.24 19.02C4.32 19.2 4.52 19.3 4.72 19.24L7.11 18.45C7.58 18.79 8.08 19.09 8.63 19.33L8.97 21.79C9 22 9.19 22.13 9.4 22.13H14.6C14.81 22.13 15 22 15.03 21.79L15.37 19.33C15.92 19.09 16.42 18.79 16.89 18.45L19.28 19.24C19.48 19.3 19.68 19.2 19.76 19.02L21.71 14.88C21.78 14.69 21.71 14.48 21.54 14.37L19.43 12.98ZM12 15.5C10.07 15.5 8.5 13.93 8.5 12C8.5 10.07 10.07 8.5 12 8.5C13.93 8.5 15.5 10.07 15.5 12C15.5 13.93 13.93 15.5 12 15.5Z" fill="white"></path>
-                              </svg>
-                            </button>
+                            
                           </div>            
                         </td>';
                   echo '</tr>';
@@ -263,19 +265,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
 </div>
 
-<!-- modal para crear una edición -->
+<?php
+require_once 'obj/config.php';
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['id_contenido'], $_POST['titulo'], $_POST['contenido'], $_POST['opcion'])) {
+        $id_contenido = $_POST['id_contenido'];
+        $titulo = $_POST['titulo'];
+        $contenido = $_POST['contenido'];
+        $tipo = $_POST['opcion'];
+
+        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if ($conn->connect_error) {
+            die("Conexión fallida: " . $conn->connect_error);
+        }
+
+        $stmt = $conn->prepare("SELECT id_categoria FROM categoria WHERE tipo = ?");
+        $stmt->bind_param("s", $tipo);
+        $stmt->execute();
+        $stmt->bind_result($id_categoria);
+        $stmt->fetch();
+        $stmt->close();
+
+        if ($id_categoria) {
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $imagen = $_FILES['imagen']['name'];
+                $target_dir = "uploads/";
+                $target_file = $target_dir . basename($imagen);
+
+                if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target_file)) {
+                    $stmt = $conn->prepare("UPDATE contenido SET titulo = ?, cuerpo = ?, id_categoria = ?, foto = ? WHERE id_contenido = ?");
+                    $stmt->bind_param("ssisi", $titulo, $contenido, $id_categoria, $target_file, $id_contenido);
+                } else {
+                    $messageError = 'Error al subir la imagen.';
+                }
+            } else {
+                $stmt = $conn->prepare("UPDATE contenido SET titulo = ?, cuerpo = ?, id_categoria = ? WHERE id_contenido = ?");
+                $stmt->bind_param("ssii", $titulo, $contenido, $id_categoria, $id_contenido);
+            }
+
+            if (empty($messageError) && $stmt->execute()) {
+                $message = 'Contenido actualizado exitosamente.';
+            } else {
+                $messageError = 'Error: ' . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            $messageError = 'Categoría no válida.';
+        }
+
+        $conn->close();
+    } else {
+        $messageError = 'Error: Faltan datos en el formulario.';
+    }
+}
+?>
+
+
+<!-- modal para editar -->
 <div id="editModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
       <h2>Editar noticia</h2>
-      <span class="close-btn" data-modal="editModal">&times;</span> 
+      <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
     </div>
-    <form id="nuevaNoticia">
+    <form id="nuevaNoticia" method="POST" action="noticias.php" enctype="multipart/form-data">
+      <input type="hidden" id="id_contenido" name="id_contenido">
       <label for="titulo">Título:</label>
-      <input type="text" id="titulo" name="ingrese titulo" required>
+      <input type="text" id="titulo" name="titulo" required>
       <label for="contenido">Contenido:</label>
-      <textarea id="exampleTextarea" name="exampleTextarea"></textarea>
-      <label for="Imagen">Subir imagen:</label> 
+      <textarea id="contenido" name="contenido"></textarea>
+      <label for="imagen">Subir imagen:</label>
       <input type="file" id="imagen" name="imagen" accept="image/*">
       <button type="submit">Editar</button>
     </form>
@@ -325,14 +387,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <span class="close-btn" onclick="cerrarModal()">&times;</span> 
     </div>
     <form id="nuevaCategoria" action="noticias.php" method="POST">
-    <label for="categoria">Nombre:</label>
-    <input type="text" id="titulo" name="ingrese_categoria" required>
-    
-    <label for="estado">Estado:</label>
-    <input type="text" id="estado" name="ingrese_estado_categoria" required>
-    
-    <button type="submit">Agregar</button>
-</form>
+      <label for="categoria">Nombre:</label>
+      <input type="text" id="titulo" name="ingrese_categoria" required>
+      
+      <label for="estado">Estado:</label>
+      <input type="text" id="estado" name="ingrese_estado_categoria" required>
+      
+      <button type="submit">Agregar</button>
+    </form>
 
   </div>
 </div>
@@ -404,6 +466,31 @@ document.querySelector('.error__close').addEventListener('click', function() {
 <?php if (isset($messagError) && !empty($messagError)): ?>
   howMessageError();
 <?php endif; ?>
+</script>
+
+<script>
+  function openEditModal(id, titulo, contenido, foto) {
+    document.getElementById('id_contenido').value = id;
+    document.getElementById('titulo').value = titulo;
+    document.getElementById('contenido').value = contenido;
+    // Si deseas mostrar la foto actual, puedes hacerlo aquí
+
+    var modal = document.getElementById('editModal');
+    modal.style.display = 'block';
+  }
+
+  function closeModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = 'none';
+  }
+
+  // Cerrar el modal cuando se hace clic fuera del contenido del modal
+  window.addEventListener('click', function(event) {
+    var modal = document.getElementById('editModal');
+    if (event.target === modal) {
+      closeModal('editModal');
+    }
+  });
 </script>
 
 
