@@ -19,6 +19,12 @@
             padding: 10px;
             margin-bottom: 10px;
         }
+        .formulario {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -31,7 +37,17 @@
         <p><strong>Descripción:</strong> Estamos buscando un desarrollador web con experiencia en HTML, CSS y JavaScript. Se requiere conocimientos en frameworks como React o Angular.</p>
         <p><strong>Requisitos:</strong> Experiencia mínima de 2 años, manejo de bases de datos SQL y NoSQL.</p>
         <p><strong>Fecha de publicación:</strong> 17 de junio de 2024</p>
-        <a href="#" class="btn">Aplicar</a>
+        <button class="btn-aplicar">Aplicar</button>
+        <div class="formulario">
+            <h3>Formulario de Aplicación</h3>
+            <form action="#" method="POST">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
     </div>
 
     <div class="oferta">
@@ -41,11 +57,28 @@
         <p><strong>Descripción:</strong> Estamos buscando un diseñador gráfico creativo y proactivo. Debe tener experiencia en Adobe Illustrator, Photoshop y otras herramientas de diseño.</p>
         <p><strong>Requisitos:</strong> Portfolio de trabajos anteriores, capacidad para trabajar en equipo y bajo presión.</p>
         <p><strong>Fecha de publicación:</strong> 15 de junio de 2024</p>
-        <a href="#" class="btn">Aplicar</a>
+        <button class="btn-aplicar">Aplicar</button>
+        <div class="formulario">
+            <h3>Formulario de Aplicación</h3>
+            <form action="#" method="POST">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
     </div>
 
-   
-    
+    <!-- Puedes agregar más ofertas de trabajo aquí -->
 
-</body>
-</html>
+    <script>
+        // Obtener todos los botones "Aplicar"
+        const btnAplicar = document.querySelectorAll('.btn-aplicar');
+
+        // Agregar evento click a cada botón
+        btnAplicar.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Mostrar el formulario asociado a este botón
+                const formulario = btn.nextElementSibling;
+                formulario.style
