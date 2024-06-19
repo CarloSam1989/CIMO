@@ -22,13 +22,19 @@
             box-sizing: border-box;
             font-size: 14px;
         }
-        input[type="submit"] {
+        input[type="submit"], button {
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 14px;
         }
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, button:hover {
             background-color: #45a049;
         }
     </style>
@@ -52,6 +58,7 @@
         <input type="date" id="fecha" name="fecha" required>
 
         <input type="submit" value="Publicar">
+        <button onclick="window.location.href='http://127.0.0.1:5502/bolsa.html'">Ir a Bolsa de Trabajo</button>
     </form>
 </body>
 </html>
