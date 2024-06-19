@@ -1,6 +1,3 @@
-<?php 
- include_once 'obj/bd.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,16 +29,13 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="noticias.php">Noticias</a>
+                            <a class="nav-link" href="#">Noticias</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contactos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Acerca de</a>
-                        </li>
-                        <li class="nav-item">
-                        <li><a class="eslaider.php"href="#">Eslaider</a>
+                        <li><a class="nav-link"href="#">Slaider</a>
                     </li>                               
                     </ul>
                     <form class="d-flex">
@@ -50,18 +44,7 @@
                           <span class="text1 text-dark">Síguenos</span>
                           <span class="text2">1,2k</span> 
                         </button>
-                        <?php
-                            if(verificar_sesion()){
-                                ?>
-<a href="logout.php" class="btn-login">Cerrar Sesion</a>
-                                <?php
-                            }else{
-                                ?>
-<a href="login.php" class="btn-login">Login</a>
-                                <?php
-                            }
-                        ?>
-                                               
+                        <a href="login.html" class="btn-login">Login</a>                       
                       </form>
                       
                 </div>
