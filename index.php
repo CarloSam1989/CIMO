@@ -1,3 +1,6 @@
+<?php 
+ include_once 'obj/bd.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +48,18 @@
                           <span class="text1 text-dark">Síguenos</span>
                           <span class="text2">1,2k</span> 
                         </button>
-                        <a href="login.html" class="btn-login">Login</a>                       
+                        <?php
+                            if(verificar_sesion()){
+                                ?>
+<a href="logout.php" class="btn-login">Cerrar Sesion</a>
+                                <?php
+                            }else{
+                                ?>
+<a href="login.php" class="btn-login">Login</a>
+                                <?php
+                            }
+                        ?>
+                                               
                       </form>
                       
                 </div>

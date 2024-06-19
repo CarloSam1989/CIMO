@@ -39,8 +39,9 @@ function login($usuario, $pass){
 function verificar_sesion() {
     session_start();
     if (!isset($_SESSION['id'])) {
-        header('Location: index.php');
-        exit();
+        return 0;
+    }else{
+        return 1;
     }
 }
 ?>
