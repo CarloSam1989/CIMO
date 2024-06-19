@@ -32,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Noticias</a>
+                            <a class="nav-link" href="noticias.php">Noticias</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contactos</a>
@@ -40,7 +40,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Acerca de</a>
                         </li>
-                        <li><a href="eslaider.php">Eslaider</a></li>                               
+                        <li class="nav-item">
+                        <li><a class="eslaider.php"href="#">Eslaider</a>
+                    </li>                               
                     </ul>
                     <form class="d-flex">
                         <button class="boton-social" id="social"> 
