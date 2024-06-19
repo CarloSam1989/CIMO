@@ -7,18 +7,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pass = $_POST['pass'];
 
         if (login($usuario, $pass)) {
-            header('Location: index.html');
+            header('Location: index.php');
             exit();
         } else {
-            header('Location: error.html');
+            header('Location: error.php');
             exit();
         }
     } else {
-        header('Location: error.html');
+        header('Location: error.php');
         exit();
     }
 } else {
-    header('Location: error.html');
+    header('Location: error.php');
     exit();
 }
 ?>

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/cuerpo.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
 </head>
 <body>
     <header>
@@ -36,7 +37,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Acerca de</a>
                         </li>
-                                                            
+                        <li class="nav-item">
+                        <li><a class="eslaider.php"href="#">Eslaider</a>
+                    </li>                               
                     </ul>
                     <form class="d-flex">
                         <button class="boton-social" id="social"> 
