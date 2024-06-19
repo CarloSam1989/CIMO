@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-                <a class="navbar-brand" href="form.html">CIMO</a>
+                <a class="navbar-brand" href="form.php">CIMO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -44,7 +44,7 @@
                           <span class="text1 text-dark">Síguenos</span>
                           <span class="text2">1,2k</span> 
                         </button>
-                        <a href="login.html" class="btn-login">Login</a>                       
+                        <a href="login.php" class="btn-login">Login</a>                       
                       </form>
                       
                 </div>
