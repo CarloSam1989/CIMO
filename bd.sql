@@ -49,7 +49,6 @@ CREATE TABLE `contenido` (
   CONSTRAINT `fk_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 #
 # Structure for table "bolsa_de_trabajo"
 #
@@ -69,5 +68,11 @@ CREATE TABLE `bolsa_de_trabajo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
-# Data for table "bolsa_de_trabajo"
+# Structure for table "carrusel"
 #
+
+DROP TABLE IF EXISTS `carrusel`;
+CREATE TABLE `carrusel` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `ruta_imagen` VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

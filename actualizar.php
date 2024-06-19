@@ -1,4 +1,5 @@
 <?php
+$id = $_POST['id'];
 $target_dir = "img/carrusel/";
 $target_file = $target_dir . basename($_FILES["imagen"]["name"]);
 $uploadOk = 1;
@@ -39,16 +40,16 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
-        // Insertar ruta de imagen en la base de datos
+        // Actualizar ruta de imagen en la base de datos
         $conn = new mysqli('localhost', 'usuario', 'contraseña', 'base_de_datos');
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
         }
-        $sql = "INSERT INTO carrusel (ruta_imagen) VALUES ('$target_file')";
+        $sql = "UPDATE carrusel SET ruta_imagen='$target_file' WHERE id=$id";
         if ($conn->query($sql) === TRUE) {
-            echo "La imagen ". htmlspecialchars( basename( $_FILES["imagen"]["name"])). " ha sido subida.";
+            echo "La imagen ha sido actualizada.";
         } else {
-            echo "Error al guardar la imagen en la base de datos: " . $conn->error;
+            echo "Error al actualizar la imagen en la base de datos: " . $conn->error;
         }
         $conn->close();
     } else {
