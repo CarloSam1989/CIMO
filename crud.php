@@ -162,4 +162,27 @@ class CategoryManager {
 }
 
 
+class ContentManager {
+    private $conn;
+
+    public function __construct($conn) {
+        $this->conn = $conn;
+    }
+
+    public function getContents() {
+        $result = $this->conn->query("SELECT id_contenido, titulo, cuerpo, foto, fecha_creacion FROM contenido");
+
+        if ($result->num_rows > 0) {
+            $contents = [];
+            while ($row = $result->fetch_assoc()) {
+                $contents[] = $row;
+            }
+            return $contents;
+        } else {
+            return [];
+        }
+    }
+}
+
+
 ?>

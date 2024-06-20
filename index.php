@@ -78,71 +78,53 @@
             </div>
         </div>
         
-        
-        <!-- <div class="bg-dark divisor">
-            <h2 class="text-light">Sección media</h2>
-        </div> -->
 
-        <section class="section-cards">
-            <div class="cards-container">
+
+        <?php
+            require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentManager
+
+            $database = new DatabaseConnection();
+            $conn = $database->getConnection();
+
+            $contentManager = new ContentManager($conn);
+            $contents = $contentManager->getContents();
+
+            $database->closeConnection();
+        ?>
+
+<section class="section-cards">
+    <div class="cards-container">
+        <?php if (!empty($contents)): ?>
+            <?php foreach ($contents as $row): ?>
                 <div class="card col-sm-12 col-md-6">
                     <div class="card-image">
-                        <img src="img/noticias/noticia 1.jpg" alt="Imagen noticia 1">
+                        <?php if ($row['foto']): ?>
+                            <img src="<?php echo $row['foto']; ?>" alt="Imagen noticia <?php echo $row['id_contenido']; ?>">
+                        <?php else: ?>
+                            <img src="img/default-image.jpg" alt="Imagen por defecto">
+                        <?php endif; ?>
                     </div>
-                    <p class="card-title text-primary">Aniversario número 30</p>
-                    <p class="card-body">
-                        El Colegio de Ingenieros Mecánicos de El Oro CIMO , representado
-                         por su presidente, el Ing. Gabriel Angel Encalada, y el Ing. 
-                         Bismark Ollague asistieron <a href="#">Leer mas</a>
-                    </p>
-                    <p class="footer"> 
-                        <span class="date">23/05/24</span>
+                    <p class="card-title text-primary"><?php echo $row['titulo']; ?></p>
+                    <p class="card-body"><?php echo substr($row['cuerpo'], 0, 100); ?>... <a href="#">Leer más</a></p>
+                    <p class="footer">
+                        <span class="date">
+                            <?php 
+                            if (isset($row['fecha_creacion'])) {
+                                echo date("d/m/Y", strtotime($row['fecha_creacion'])); 
+                            } else {
+                                echo "Fecha no disponible";
+                            }
+                            ?>
+                        </span>
                     </p>
                 </div>
-                <div class="card col-sm-12 col-md-6">
-                    <div class="card-image">
-                        <img src="img/noticias/noticia 2.jpg" alt="Imagen noticia 2">
-                    </div>
-                    <p class="card-title text-primary">Premiación de @ADEPRORO </p>
-                    <p class="card-body">
-                        El Colegio de Ingenieros Mecánicos de El Oro CIMO estuvo 
-                        representado por el presidente Ing. Gabriel Angel Encalada
-                         y el Ing. Eduardo Crespo Azanza   en la ceremonia de <a href="#">Leer mas</a>
-                    </p>
-                    <p class="footer"> 
-                        <span class="date">06/04/24</span>
-                    </p>
-                </div>
-                <div class="card col-sm-12 col-md-6">
-                    <div class="card-image">
-                        <img src="img/noticias/noticia 3.jpg" alt="Imagen noticia 3">
-                    </div>
-                    <p class="card-title text-primary">Cena anual </p>
-                    <p class="card-body">
-                        Con gran alegría y entusiasmo, se llevó a cabo la esperada y 
-                        exitosa cena anual del  Colegio de Ingenieros Mecánicos de 
-                        El Oro CIMO. <a href="#">Leer mas</a>
-                    </p>
-                    <p class="footer"> 
-                        <span class="date">28/12/23</span>
-                    </p>
-                </div>
-                <div class="card col-sm-12 col-md-6">
-                    <div class="card-image">
-                        <img src="img/noticias/noticia 4.jpg" alt="Imagen noticia 4">
-                    </div>
-                    <p class="card-title text-primary">Convenio interinstitucional</p>
-                    <p class="card-body">
-                        El Instituto Tecnológico Sudamericano y el Colegio de Ingenieros 
-                        Mecánicos de El Oro a través de su presidente el Ing. 
-                        Gabriel Angel Encalada han <a href="#">Leer mas</a>
-                    </p>
-                    <p class="footer"> 
-                        <span class="date">02/09/23</span>
-                    </p>
-                </div>
-            </div>
-        </section>        
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No hay noticias disponibles😒. Empieze a crearlas 😁👍</p>
+        <?php endif; ?>
+    </div>
+</section>
+      
     </main>
 
     <footer class="bg-dark text-light">
