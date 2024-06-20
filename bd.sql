@@ -1,10 +1,10 @@
-# Host: localhost (Version 5.0.45-community-nt)
-# Date: 2024-06-15
-# Generator: MySQL-Front 6.1 (Build 1.26)
+-- Host: localhost (Version 5.0.45-community-nt)
+-- Date: 2024-06-15
+-- Generator: MySQL-Front 6.1 (Build 1.26)
 
-#
-# Structure for table "categoria"
-#
+--
+-- Structure for table "categoria"
+--
 
 DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
@@ -14,9 +14,9 @@ CREATE TABLE `categoria` (
   PRIMARY KEY (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Structure for table "persona"
-#
+--
+-- Structure for table "persona"
+--
 
 DROP TABLE IF EXISTS `persona`;
 CREATE TABLE `persona` (
@@ -31,9 +31,9 @@ CREATE TABLE `persona` (
   UNIQUE KEY `correo` (`correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Structure for table "contenido"
-#
+--
+-- Structure for table "contenido"
+--
 
 DROP TABLE IF EXISTS `contenido`;
 CREATE TABLE `contenido` (
@@ -49,9 +49,9 @@ CREATE TABLE `contenido` (
   CONSTRAINT `fk_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Structure for table "bolsa_de_trabajo"
-#
+--
+-- Structure for table "bolsa_de_trabajo"
+--
 
 DROP TABLE IF EXISTS `bolsa_de_trabajo`;
 CREATE TABLE `bolsa_de_trabajo` (
@@ -67,9 +67,9 @@ CREATE TABLE `bolsa_de_trabajo` (
   `Portafolio` NVARCHAR(50)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Structure for table "carrusel"
-#
+--
+-- Structure for table "carrusel"
+--
 
 DROP TABLE IF EXISTS `carrusel`;
 CREATE TABLE `carrusel` (

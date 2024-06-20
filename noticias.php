@@ -131,68 +131,38 @@
           $conn->close();
         ?>
       </tbody>
-
     </table>
   </div>
 </main> 
-<?php
-require_once 'obj/config.php';
 
-$message = '';
-$messagError = ''; 
+<?php
+
+require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
+
+$database = new DatabaseConnection();
+$conn = $database->getConnection();
+
+$contentCreator = new ContentCreator($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Verificar si las variables están definidas
-    if (isset($_POST['titulo']) && isset($_POST['contenido']) && isset($_POST['opcion'])) {
+    if (isset($_POST['titulo']) && isset($_POST['contenido']) && isset($_POST['opcion']) && isset($_FILES['imagen'])) {
         $titulo = $_POST['titulo'];
         $cuerpo = $_POST['contenido'];
         $tipo = $_POST['opcion'];
+        $imagen = $_FILES['imagen'];
 
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-
-        $stmt = $conn->prepare("SELECT id_categoria FROM categoria WHERE tipo = ?");
-        $stmt->bind_param("s", $tipo);
-        $stmt->execute();
-        $stmt->bind_result($id_categoria);
-        $stmt->fetch();
-        $stmt->close();
-
-        if ($id_categoria) {
-            $estado = 1;
-
-            $imagen = $_FILES['imagen']['name'];    
-            $target_dir = "uploads/";
-            $target_file = $target_dir . basename($imagen);
-
-            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target_file)) {
-              $stmt = $conn->prepare("INSERT INTO contenido (titulo, cuerpo, id_categoria, foto, estado) VALUES (?, ?, ?, ?, ?)");
-              $stmt->bind_param("ssisi", $titulo, $cuerpo, $id_categoria, $target_file, $estado);
-
-              if ($stmt->execute()) {
-                $message = 'Nuevo contenido agregado exitosamente.';
-              } else {
-                $message = 'Error: ' . $stmt->error;
-              }
-                $stmt->close();
-
-            } else {
-              $messagError  = 'Error al subir la imagen.';
-            }
-
-        } else {
-          $messagError  = 'Categoría no válida.';
-        }
-
-        $conn->close();
+        $message = $contentCreator->addContent($titulo, $cuerpo, $tipo, $imagen);
+        echo $message;
     } else {
-      $messagError  = 'Error: Faltan datos en el formulario.';
+        echo 'Error: Faltan datos en el formulario.';
     }
 }
+
+$database->closeConnection();
+
 ?>
+
+
 
 <!-- Modal de creación de noticia -->
 <div id="agregarModal" class="modal">
@@ -212,24 +182,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="modal-header">
         <select id="opcion"  class="opciones" name="opcion">
           <?php
-          require_once 'obj/config.php';
 
-          $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
 
-          if ($conn->connect_error) {
-              die("Conexión fallida: " . $conn->connect_error);
-          }
+            $database = new DatabaseConnection();
+            $conn = $database->getConnection();
 
-          $result = $conn->query("SELECT id_categoria, tipo FROM categoria WHERE estado = 1");
+            $categoryManager = new CategoryManager($conn);
+            $categories = $categoryManager->getActiveCategories();
 
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  echo '<option value="' . $row['tipo'] . '">' . $row['tipo'] . '</option>';
-              }
-          }
+            $database->closeConnection();
 
-          $conn->close();
+            foreach ($categories as $category) {
+                echo '<option value="' . $category['tipo'] . '">' . $category['tipo'] . '</option>';
+            }
+
           ?>
+
         </select>
         <button type="button" onclick="agregarTipo()" class="crear">
           <span>
@@ -240,6 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             Categoría
           </span>
         </button>
+
       </div>
       <button type="submit" id="createButton" onclick="showMessage()">Crear</button>
 
@@ -247,6 +217,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
 </div>
 
+<?php
+
+require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentDeleter
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['idEliminar'])) {
+    $database = new DatabaseConnection();
+    $conn = $database->getConnection();
+
+    $contentDeleter = new ContentDeleter($conn);
+
+    $id = $_POST['idEliminar'];
+    $message = $contentDeleter->deleteContent($id);
+    echo $message;
+
+    $database->closeConnection();
+}
+
+?>
 <!-- Modal de eliminación -->
 <div id="eliminarModal" class="modal">
   <div class="modal-content">
@@ -258,69 +246,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         Esta acción es irreversible y se perderán todos los datos de ella.</p>
     </div>
     <div class="modal-footer">
-      <input type="hidden" id="idEliminar" name="id">
-      <button class="btn-deactivate btnmodaleliminar" type="button" onclick="eliminarNoticia()">Eliminar</button>
-      <button class="btn-cancel" type="button" onclick="closeModal('eliminarModal')">Cancelar</button>
+      <form id="formEliminar" action="noticias.php" method="post">
+        <input type="hidden" id="idEliminar" name="idEliminar">
+        <button class="btn-deactivate btnmodaleliminar" type="submit">Eliminar</button>
+        <button class="btn-cancel" type="button" onclick="closeModal('eliminarModal')">Cancelar</button>
+      </form>
     </div>
   </div>
 </div>
 
 <?php
-require_once 'obj/config.php';
 
+require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['id_contenido'], $_POST['titulo'], $_POST['contenido'], $_POST['opcion'])) {
-        $id_contenido = $_POST['id_contenido'];
-        $titulo = $_POST['titulo'];
-        $contenido = $_POST['contenido'];
-        $tipo = $_POST['opcion'];
+$database = new DatabaseConnection();
+$conn = $database->getConnection();
 
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$contentEditor = new ContentEditor($conn);
 
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_contenido'])) {
+    $id = $_POST['id_contenido'];
+    $titulo = $_POST['titulo'];
+    $cuerpo = $_POST['contenido'];
+    $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : null;
 
-        $stmt = $conn->prepare("SELECT id_categoria FROM categoria WHERE tipo = ?");
-        $stmt->bind_param("s", $tipo);
-        $stmt->execute();
-        $stmt->bind_result($id_categoria);
-        $stmt->fetch();
-        $stmt->close();
-
-        if ($id_categoria) {
-            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                $imagen = $_FILES['imagen']['name'];
-                $target_dir = "uploads/";
-                $target_file = $target_dir . basename($imagen);
-
-                if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target_file)) {
-                    $stmt = $conn->prepare("UPDATE contenido SET titulo = ?, cuerpo = ?, id_categoria = ?, foto = ? WHERE id_contenido = ?");
-                    $stmt->bind_param("ssisi", $titulo, $contenido, $id_categoria, $target_file, $id_contenido);
-                } else {
-                    $messageError = 'Error al subir la imagen.';
-                }
-            } else {
-                $stmt = $conn->prepare("UPDATE contenido SET titulo = ?, cuerpo = ?, id_categoria = ? WHERE id_contenido = ?");
-                $stmt->bind_param("ssii", $titulo, $contenido, $id_categoria, $id_contenido);
-            }
-
-            if (empty($messageError) && $stmt->execute()) {
-                $message = 'Contenido actualizado exitosamente.';
-            } else {
-                $messageError = 'Error: ' . $stmt->error;
-            }
-            $stmt->close();
-        } else {
-            $messageError = 'Categoría no válida.';
-        }
-
-        $conn->close();
-    } else {
-        $messageError = 'Error: Faltan datos en el formulario.';
-    }
+    $message = $contentEditor->editContent($id, $titulo, $cuerpo, $imagen);
+    echo $message;
 }
+
+$database->closeConnection();
+
 ?>
 
 
@@ -345,39 +300,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <?php
-require_once 'obj/config.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Verificar si las variables están definidas
-    if (isset($_POST['ingrese_categoria']) && isset($_POST['ingrese_estado_categoria'])) {
-        $categoria = $_POST['ingrese_categoria'];
-        $estado = $_POST['ingrese_estado_categoria'];
+require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y CategoryManager
 
-        // Crear conexión
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$database = new DatabaseConnection();
+$conn = $database->getConnection();
 
-        // Verificar conexión
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
+$categoryManager = new CategoryManager($conn);
 
-        // Insertar datos en la tabla 'categoria'
-        $stmt = $conn->prepare("INSERT INTO categoria (tipo, estado) VALUES (?, ?)");
-        $stmt->bind_param("si", $categoria, $estado);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ingrese_categoria']) && isset($_POST['ingrese_estado_categoria'])) {
+    $categoria = $_POST['ingrese_categoria'];
+    $estado = $_POST['ingrese_estado_categoria'];
 
-        if ($stmt->execute()) {
-            $message = 'Nueva categoría agregada exitosamente.';
-        } else {
-            $messagError = 'Error: ' . $stmt->error;
-        }
-
-        $stmt->close();
-        $conn->close();
-    } else {
-        $messagError = 'Error: Faltan datos en el formulario.';
-    }
+    $message = $categoryManager->addCategory($categoria, $estado);
+    echo $message;
 }
-?>  
+
+$database->closeConnection();
+
+?>
+  
 
 <!-- moadal para crear una nueva categoría -->
 <div id="agregar" class="modal" style="display: none;">
@@ -429,8 +371,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
-
-<script src="js/noticias.js"></script>
+<script src="js/noticias2.js"></script>
 
 <footer class="text-center mt-4">
   <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
@@ -442,11 +383,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 function showMessage() {
     document.getElementById('infoMessage').style.display = 'flex';
 }
-
 document.querySelector('.info__close').addEventListener('click', function() {
     document.getElementById('infoMessage').style.display = 'none';
 });
-
 // Llama a la función showMessage() si hay un mensaje PHP
 <?php if (isset($message) && !empty($message)): ?>
     showMessage();
@@ -457,40 +396,13 @@ document.querySelector('.info__close').addEventListener('click', function() {
 function showMessageError() {
     document.getElementById('ErrorMessage').style.display = 'flex';
 }
-
 document.querySelector('.error__close').addEventListener('click', function() {
     document.getElementById('ErrorMessage').style.display = 'none';
 });
-
 // Llama a la función showMessage() si hay un mensaje PHP
 <?php if (isset($messagError) && !empty($messagError)): ?>
   howMessageError();
 <?php endif; ?>
-</script>
-
-<script>
-  function openEditModal(id, titulo, contenido, foto) {
-    document.getElementById('id_contenido').value = id;
-    document.getElementById('titulo').value = titulo;
-    document.getElementById('contenido').value = contenido;
-    // Si deseas mostrar la foto actual, puedes hacerlo aquí
-
-    var modal = document.getElementById('editModal');
-    modal.style.display = 'block';
-  }
-
-  function closeModal(modalId) {
-    var modal = document.getElementById(modalId);
-    modal.style.display = 'none';
-  }
-
-  // Cerrar el modal cuando se hace clic fuera del contenido del modal
-  window.addEventListener('click', function(event) {
-    var modal = document.getElementById('editModal');
-    if (event.target === modal) {
-      closeModal('editModal');
-    }
-  });
 </script>
 
 
