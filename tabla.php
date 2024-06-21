@@ -184,13 +184,9 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('#logout').on('click', function () {
-                window.location.href = 'login.html';
-            });
-        });
-    </script>
+    <script src="js/boton.js"></script>
+    <script src="js/cerrar_sesion.js"></script>
+
 </body>
 
 </html>
