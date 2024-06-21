@@ -22,7 +22,6 @@ class DatabaseConnection {
     }
 }
 
-
 class ContentCreator {
     private $conn;
 
@@ -124,7 +123,6 @@ class ContentEditor {
     }
 }
 
-
 //mostrar categoría
 class CategoryManager {
     private $conn;
@@ -160,7 +158,6 @@ class CategoryManager {
         $stmt->close();
     }
 }
-
 
 class ContentManager {
     private $conn;
