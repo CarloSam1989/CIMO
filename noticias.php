@@ -180,7 +180,9 @@ $database->closeConnection();
       <input type="file" id="imagen" name="imagen" accept="image/*">
       <label for="opcion">Noticia:</label>
       <div class="modal-header">
-        <select id="opcion"  class="opciones" name="opcion">
+      <select id="opcion" class="opciones" name="opcion" style="width: 60%;">
+     </select>
+
           <?php
 
             require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
@@ -200,17 +202,10 @@ $database->closeConnection();
           ?>
 
         </select>
-        <button type="button" onclick="agregarTipo()" class="crear">
-          <span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path>
-            </svg> 
-            Categoría
-          </span>
-        </button>
-
-      </div>
+        <button type="button" onclick="agregarTipo()" class="crear" style="width: 35%; background-color: black; color: white; border: none; padding: 11px;">
+    Añadir categoría
+</button>
+ </div>
       <button type="submit" id="createButton" onclick="showMessage()">Crear</button>
 
     </form>

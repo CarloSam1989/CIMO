@@ -67,9 +67,7 @@
     </header>
 
     <main>
-        <div class="carousel-container">
-            <div class="carousel-title md-4">Colegio de Ingenieros Mecánicos de El Oro (CIMO)</div>
-            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="img/imagen1.jpg" class="d-block w-100" alt="...">
@@ -91,6 +89,19 @@
                 </button>
             </div>
         </div>
+        <div class="carousel-container" style="background-color: transparent; position: relative;">
+    <div class="carousel">
+        <!-- Contenido del carrusel aquí -->
+    </div>
+    <div class="text-bottom" style="position: absolute; bottom: 60%; left: 10%; transform: translateX(-0%); text-align: center; color: #ffffff; font-size: 300%;">
+        "Colegio de Ingenieros Mecánicos de El Oro" (CIMO)
+    </div>
+</div>
+
+
+
+
+
         
         <?php
             require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentManager
