@@ -48,19 +48,18 @@
                           <span class="text2">1,2k</span> 
                         </button>
                         <?php
-                            if(verificar_sesion()){
-                                ?>
-<a href="logout.php" class="btn-login">Cerrar Sesion</a>
-                                <?php
-                            }else{
-                                ?>
-<a href="login.php" class="btn-login">Login</a>
-                                <?php
-                            }
-                        ?>
-                        
-                      </form>
-                      
+                        if (verificar_sesion()) {
+                            ?>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle text-light" type="button"
+                                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
+                                </ul>
+                            </div>
+                    </form>
                 </div>
             </div>
         </nav>
