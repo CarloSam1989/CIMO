@@ -51,9 +51,17 @@
                             <span class="text1 text-dark">Síguenos</span>
                             <span class="text2">1,2k</span>
                         </button>
-                        <a href="login.html" class="btn-login">Login</a>
+                        <div class="dropdown ms-3">
+                            <button class="btn btn-link dropdown-toggle text-light" type="button"
+                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Configuración del perfil</a></li>
+                                <li><a class="dropdown-item" href="#" id="logout">Cerrar sesión</a></li>
+                            </ul>
+                        </div>
                     </form>
-
                 </div>
             </div>
         </nav>
@@ -176,6 +184,13 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#logout').on('click', function () {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 </body>
 
 </html>
