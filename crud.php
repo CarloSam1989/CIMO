@@ -94,8 +94,12 @@ class ContentEditor {
     }
 
     public function editContent($id, $titulo, $cuerpo, $imagen) {
+        if (empty($id) || empty($titulo) || empty($cuerpo)) {
+            return 'Error: Faltan datos en el formulario.';
+        }
+
         // Verificar si se subió una nueva imagen
-        if ($imagen['error'] == UPLOAD_ERR_OK) {
+        if ($imagen && $imagen['error'] == UPLOAD_ERR_OK) {
             $target_dir = "uploads/";
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0777, true);
@@ -116,6 +120,7 @@ class ContentEditor {
         if ($stmt->execute()) {
             return 'Noticia editada exitosamente.';
         } else {
+            error_log('Error: ' . $stmt->error); // Log del error
             return 'Error: ' . $stmt->error;
         }
 
@@ -180,6 +185,5 @@ class ContentManager {
         }
     }
 }
-
 
 ?>

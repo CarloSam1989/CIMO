@@ -11,7 +11,7 @@ function conectar(){
     return $conn;
 }
 
-function login($usuario, $pass){
+function login($usuario, $pass) {
     $conexion = conectar();
     $sql = $conexion->prepare("SELECT id_persona, password FROM persona WHERE correo = ?");
     if (!$sql) {
@@ -36,12 +36,14 @@ function login($usuario, $pass){
     return false;
 }
 
+session_start();
+
 function verificar_sesion() {
-    session_start();
     if (!isset($_SESSION['id'])) {
         return 0;
-    }else{
+    } else {
         return 1;
     }
 }
 ?>
+

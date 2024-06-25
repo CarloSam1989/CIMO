@@ -71,65 +71,67 @@
         </tr>
       </thead>
       <tbody>
-      <?php
-        // Incluir el archivo de configuración para la conexión a la base de datos
-        require_once 'obj/config.php';
+        <?php
+          // Incluir el archivo de configuración para la conexión a la base de datos
+          require_once 'obj/config.php';
 
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+          $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-
-        // Mostrar las noticias
-        $result = $conn->query("SELECT id_contenido, titulo, cuerpo, foto FROM contenido");
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td scope="row">' . $row['id_contenido'] . '</td>';
-                echo '<td>' . $row['titulo'] . '</td>';
-                echo '<td>' . substr($row['cuerpo'], 0, 50) . '...</td>';
-                echo '<td>';
-                if ($row['foto']) {
-                  echo '<img src="' . $row['foto'] . '" alt="Noticia' . '" width="80">';
-                } else {
-                    echo 'No hay niniguna imagen image';
-                }
-                echo '</td>';
-                echo '<td>
-                          <div class="botones">
-                            <button class="bin-button" type="button" onclick="openEliminarModal(' . $row['id_contenido'] . ')">
-                              <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
-                                <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
-                              </svg>
-                              <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <mask id="path-1-inside-1_8_19" fill="white">
-                                  <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
-                                </mask>
-                                <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
-                                <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
-                                <path d="M21 6V29" stroke="white" stroke-width="4"></path>
-                              </svg>
-                            </button>
-                            <button class="edit-button" type="button" onclick="openEditModal(' . $row['id_contenido'] . ', \'' . $row['titulo'] . '\', \'' . addslashes($row['cuerpo']) . '\', \'' . $row['foto'] . '\')">
-                              <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
-                                <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
-                              </svg>
-                            </button>
-                            
-                          </div>            
-                        </td>';
-                  echo '</tr>';
-              }
-          } else {
-              echo '<tr><td colspan="5">No hay noticias disponibles.</td></tr>';
+          if ($conn->connect_error) {
+              die("Conexión fallida: " . $conn->connect_error);
           }
 
-          $conn->close();
-        ?>
+          // Mostrar las noticias
+          $result = $conn->query("SELECT id_contenido, titulo, cuerpo, foto FROM contenido");
+
+          if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                  echo '<tr>';
+                  echo '<td scope="row">' . $row['id_contenido'] . '</td>';
+                  echo '<td>' . $row['titulo'] . '</td>';
+                  echo '<td>' . substr($row['cuerpo'], 0, 50) . '...</td>';
+                  echo '<td>';
+                  if ($row['foto']) {
+                      echo '<img src="' . $row['foto'] . '" alt="Noticia" width="80">';
+                  } else {
+                      echo 'No hay ninguna imagen';
+                  }
+                  echo '</td>';
+                  echo '<td>
+                            <div class="botones">
+                              <button class="bin-button" type="button" onclick="openEliminarModal(' . $row['id_contenido'] . ')">
+                                <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+                                  <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
+                                </svg>
+                                <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <mask id="path-1-inside-1_8_19" fill="white">
+                                    <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
+                                  </mask>
+                                  <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
+                                  <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                                  <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+                                </svg>
+                              </button>
+                              <button class="edit-button" type="button" 
+                                      data-id="' . $row['id_contenido'] . '" 
+                                      data-titulo="' . htmlspecialchars($row['titulo'], ENT_QUOTES, 'UTF-8') . '" 
+                                      data-contenido="' . htmlspecialchars($row['cuerpo'], ENT_QUOTES, 'UTF-8') . '">
+                                <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
+                                  <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
+                                </svg>
+                              </button>
+                            </div>            
+                          </td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="5">No hay noticias disponibles.</td></tr>';
+            }
+
+            $conn->close();
+          ?>
       </tbody>
     </table>
   </div>
@@ -180,8 +182,8 @@ $database->closeConnection();
       <input type="file" id="imagen" name="imagen" accept="image/*">
       <label for="opcion">Noticia:</label>
       <div class="modal-header">
-      <select id="opcion" class="opciones" name="opcion" style="width: 60%;">
-     </select>
+
+        <select id="opcion" class="opciones" name="opcion">
 
           <?php
 
@@ -202,15 +204,21 @@ $database->closeConnection();
           ?>
 
         </select>
-        <button type="button" onclick="agregarTipo()" class="crear" style="width: 35%; background-color: black; color: white; border: none; padding: 11px;">
-    Añadir categoría
-</button>
- </div>
+         <button type="button" onclick="agregarTipo()" class="crear">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path>
+            </svg> 
+            Agregar categoría
+          </span>
+        </button>
+      </div>
       <button type="submit" id="createButton" onclick="showMessage()">Crear</button>
-
     </form>
   </div>
 </div>
+
 
 <?php
 
@@ -252,7 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['idEliminar'])) {
 
 <?php
 
-require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
+require_once 'crud.php';
 
 $database = new DatabaseConnection();
 $conn = $database->getConnection();
@@ -260,6 +268,8 @@ $conn = $database->getConnection();
 $contentEditor = new ContentEditor($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_contenido'])) {
+    error_log('Datos recibidos: ' . print_r($_POST, true));
+    error_log('Archivo subido: ' . print_r($_FILES, true));
     $id = $_POST['id_contenido'];
     $titulo = $_POST['titulo'];
     $cuerpo = $_POST['contenido'];
@@ -274,7 +284,7 @@ $database->closeConnection();
 ?>
 
 
-<!-- modal para editar -->
+<!-- Modal para editar noticia -->
 <div id="editModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -293,6 +303,8 @@ $database->closeConnection();
     </form>
   </div>
 </div>
+
+
 
 <?php
 
@@ -367,6 +379,8 @@ $database->closeConnection();
 </div>
 
 <script src="js/noticias2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
 <footer class="text-center mt-4">
   <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
@@ -398,6 +412,29 @@ document.querySelector('.error__close').addEventListener('click', function() {
 <?php if (isset($messagError) && !empty($messagError)): ?>
   howMessageError();
 <?php endif; ?>
+</script>
+
+<script>
+function openEditModal(id, titulo, contenido) {
+  document.getElementById('id_contenido').value = id;
+  document.getElementById('titulo').value = titulo;
+  document.getElementById('contenido').value = contenido;
+  document.getElementById('editModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+// Example usage with a button to open the modal
+document.querySelectorAll('.edit-button').forEach(button => {
+  button.addEventListener('click', function() {
+    const id = this.getAttribute('data-id');
+    const titulo = this.getAttribute('data-titulo');
+    const contenido = this.getAttribute('data-contenido');
+    openEditModal(id, titulo, contenido);
+  });
+});
 </script>
 
 

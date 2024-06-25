@@ -12,7 +12,7 @@ body {
 }
 
 /* Estilos para el logo en la navbar */
-.navbar-logo {
+.navbar-logo {   
   width: 60px; /* Ajusta el tamaño del logo según sea necesario */
   height: auto;
   margin-right: 10px; /* Espacio entre el logo y el texto */

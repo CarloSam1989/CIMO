@@ -3,12 +3,12 @@
     --crear-bg-color: #000000;
     --crear-hover-bg-color: #212F3D;
     --crear-font-size: 16px;
-    --crear-padding: 0.8em 1.2em 0.8em 1em;
+    --crear-padding: 0.5em 1.2em 0.5em 1em;
     --crear-border-radius: 0.9em;
     --crear-text-color: #fff;
     --crear-font-weight: 600;
 
-    --opciones-padding: 0.5em 1em;
+    --opciones-padding: 0.5em 1.2em 0.5em 1em;
     --opciones-font-size: 16px;
     --opciones-border-color: #212F3D;
     --opciones-border-radius: 0.5em;
