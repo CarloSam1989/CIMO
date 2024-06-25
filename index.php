@@ -31,6 +31,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                            <a class="nav-link" href="noticias.php">Bolsa trabajo</a>
+                        </li>
+                    <?php
+                        if (verificar_sesion()) {
+
+                            ?>
                         <li class="nav-item">
                             <a class="nav-link" href="noticias.php">Noticias</a>
                         </li>
@@ -47,10 +54,7 @@
                           <span class="text1 text-dark">Síguenos</span>
                           <span class="text2">1,2k</span> 
                         </button>
-                        <?php
-                        if (verificar_sesion()) {
-                             }
-                            ?>
+                    
                             <div class="dropdown">
                                 <button class="btn btn-link dropdown-toggle text-light" type="button"
                                     id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,6 +64,17 @@
                                     <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
                                 </ul>
                             </div>
+                    </form>
+                    <?php
+                             }
+                            ?>
+                            <form class="d-flex">
+                        <button class="boton-social" id="social"> 
+                          <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="33" viewBox="0 0 512 512" height="33"><g fill-rule="evenodd" clip-rule="evenodd"><path fill="#3a5ba2" d="m256.23 512c140.58 0 255.77-115.19 255.77-255.77 0-141.046-115.19-256.23-255.77-256.23-141.046 0-256.23 115.184-256.23 256.23 0 140.58 115.184 255.77 256.23 255.77z"></path><path fill="#fff" d="m224.023 160.085c0-35.372 28.575-63.946 63.938-63.946h48.072v63.946h-32.199c-8.608 0-15.873 7.257-15.873 15.873v32.192h48.072v63.938h-48.072v144.22h-63.938v-144.22h-48.065v-63.938h48.065z"></path></g></svg></span>
+                          <span class="text1 text-dark">Síguenos</span>
+                          <span class="text2">1,2k</span> 
+                        </button>
+                    LOGIN
                     </form>
                 </div>
             </div>
