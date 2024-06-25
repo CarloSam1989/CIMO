@@ -51,7 +51,7 @@ class ContentCreator {
                 $stmt->bind_param("ssisi", $titulo, $cuerpo, $id_categoria, $target_file, $estado);
 
                 if ($stmt->execute()) {
-                    return 'Nuevo contenido agregado exitosamente.';
+                    header('Location: administracion.php');
                 } else {
                     return 'Error: ' . $stmt->error;
                 }
@@ -77,13 +77,27 @@ class ContentDeleter {
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {
-            return "Noticia eliminada exitosamente.";
+            header('Location: administracion.php');
+            exit(); // Asegúrate de detener la ejecución después de redirigir
         } else {
             return "Error: " . $stmt->error;
         }
 
         $stmt->close();
     }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['idEliminar'])) {
+    $database = new DatabaseConnection();
+    $conn = $database->getConnection();
+
+    $contentDeleter = new ContentDeleter($conn);
+
+    $id = $_POST['idEliminar'];
+    $message = $contentDeleter->deleteContent($id);
+    echo $message;
+
+    $database->closeConnection();
 }
 
 class ContentEditor {
@@ -118,7 +132,8 @@ class ContentEditor {
         }
 
         if ($stmt->execute()) {
-            return 'Noticia editada exitosamente.';
+            header('Location: administracion.php');
+            exit(); // Asegúrate de detener la ejecución después de redirigir
         } else {
             error_log('Error: ' . $stmt->error); // Log del error
             return 'Error: ' . $stmt->error;
@@ -126,6 +141,23 @@ class ContentEditor {
 
         $stmt->close();
     }
+}
+
+$database = new DatabaseConnection();
+$conn = $database->getConnection();
+
+$contentEditor = new ContentEditor($conn);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_contenido'])) {
+    error_log('Datos recibidos: ' . print_r($_POST, true));
+    error_log('Archivo subido: ' . print_r($_FILES, true));
+    $id = $_POST['id_contenido'];
+    $titulo = $_POST['titulo'];
+    $cuerpo = $_POST['contenido'];
+    $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : null;
+
+    $message = $contentEditor->editContent($id, $titulo, $cuerpo, $imagen);
+    echo $message;
 }
 
 //mostrar categoría
@@ -155,6 +187,7 @@ class CategoryManager {
         $stmt->bind_param("si", $categoria, $estado);
 
         if ($stmt->execute()) {
+            header('Location: administracion.php');
             return 'Nueva categoría agregada exitosamente.';
         } else {
             return 'Error: ' . $stmt->error;

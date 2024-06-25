@@ -33,11 +33,11 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="noticias.php">Bolsa trabajo</a>
+                            <a class="nav-link" href="bolsa.php">Bolsa trabajo</a>
                         </li>
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="noticias.php">Noticias</a>
+                                <a class="nav-link" href="administracion.php">Administración</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Contactos</a>
@@ -82,7 +82,9 @@
     </header>
 
     <main>
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-container">
+            <div class="carousel-title md-4">Colegio de Ingenieros Mecánicos de El Oro (CIMO)</div>
+            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="img/imagen1.jpg" class="d-block w-100" alt="...">
@@ -104,22 +106,9 @@
                 </button>
             </div>
         </div>
-        <div class="carousel-container" style="background-color: transparent; position: relative;">
-    <div class="carousel">
-        <!-- Contenido del carrusel aquí -->
-    </div>
-    <div class="text-bottom" style="position: absolute; bottom: 60%; left: 10%; transform: translateX(-0%); text-align: center; color: #ffffff; font-size: 300%;">
-        "Colegio de Ingenieros Mecánicos de El Oro" (CIMO)
-    </div>
-</div>
 
-
-
-
-
-        
         <?php
-            require_once 'crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentManager
+            require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentManager
 
             $database = new DatabaseConnection();
             $conn = $database->getConnection();
@@ -143,7 +132,7 @@
                                 <?php endif; ?>
                             </div>
                             <p class="card-title text-primary"><?php echo $row['titulo']; ?></p>
-                            <p class="card-body"><?php echo substr($row['cuerpo'], 0, 100); ?>... <a href="#">Leer más</a></p>
+                            <p class="card-body"><?php echo substr($row['cuerpo'], 0, 100); ?>... <a href="noticias.php">Leer más</a></p>
                             <p class="footer">
                                 <span class="date">
                                     <?php 
@@ -158,7 +147,7 @@
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No hay noticias disponibles😒. Empieze a crearlas 😁👍</p>
+                    <p>No hay noticias disponibles. Empieze a crearlas 😁👍</p>
                 <?php endif; ?>
             </div>
         </section>        

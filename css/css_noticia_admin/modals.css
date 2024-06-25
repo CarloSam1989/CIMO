@@ -60,7 +60,7 @@ form input[type="file"] {
 
 form button[type="submit"],
 .btn-cancel,
-.btnmodaleliminar {
+.btnmodal_eliminar {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
@@ -90,12 +90,12 @@ form button[type="submit"]:hover {
     background-color: var(--button-cancel-hover-bg);
 }
 
-.btnmodaleliminar {
+.btnmodal_eliminar {
     background-color: var(--button-delete-bg);
     color: var(--button-text);
     border: none;
 }
 
-.btnmodaleliminar:hover {
+.btnmodal_eliminar:hover {
     background-color: var(--button-delete-hover-bg);
 }

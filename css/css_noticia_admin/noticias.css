@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tarjeta_noticia {
+    border: 1px solid #000;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.tarjeta_header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tarjeta_body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.card-text {
+    flex: 1;
+    margin-right: 20px;
+    text-align: justify; /* Justifica el texto */
+}
+
+.image {
+    max-width: 200px; /* Ajusta el tamaño de la imagen según sea necesario */
+    margin-left: 20px; /* Espacio entre el texto y la imagen */
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5vh;
+}
+
+.footer {
+    padding: 12px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}

@@ -12,11 +12,11 @@
 
 .carousel-title {
   position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  width: 300px; /* Establece el ancho */
-  height: 300px; /* Establece la altura igual al ancho para que sea cuadrado */
+  bottom: 10px; /* Mueve el elemento al fondo */
+  left: 50%; /* Centra horizontalmente */
+  transform: translateX(-50%); /* Ajusta para centrar correctamente */
+  width: 80%; /* Ajusta el ancho según sea necesario */
+  height: auto; /* Permite que la altura se ajuste automáticamente */
   font-size: 40px; /* Ajusta el tamaño del texto según sea necesario */
   font-family: "Anton", sans-serif;
   font-weight: 400;
