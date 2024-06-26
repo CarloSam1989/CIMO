@@ -38,7 +38,7 @@
                             <a class="nav-link" href="#">Acerca de</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Eslaider</a>
+                            <a class="nav-link" href="#">Slaider</a>
                         </li>                               
                     </ul>
                     <form class="d-flex">
