@@ -21,6 +21,20 @@ class DatabaseConnection {
         $this->conn->close();
     }
 }
+class Crud {
+    private $conn;
+
+    public function __construct($conn) {
+        $this->conn = $conn;
+    }
+
+    public function getNoticias() {
+        $sql = "SELECT id_contenido, titulo, cuerpo, foto FROM contenido";
+        $result = $this->conn->query($sql);
+
+        return $result;
+    }
+}
 
 class ContentCreator {
     private $conn;
@@ -52,6 +66,7 @@ class ContentCreator {
 
                 if ($stmt->execute()) {
                     header('Location: administracion.php');
+                    exit();  // Asegúrate de que el script se detenga después de redirigir
                 } else {
                     return 'Error: ' . $stmt->error;
                 }
@@ -64,6 +79,7 @@ class ContentCreator {
         }
     }
 }
+
 
 class ContentDeleter {
     private $conn;
