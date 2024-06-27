@@ -50,3 +50,9 @@ window.addEventListener('click', function(event) {
         cerrarModal();
     }
 });
+
+document.getElementById('agregarNoticia').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('contenedorNoticia').style.display = 'block';
+});
+

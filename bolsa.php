@@ -69,17 +69,7 @@
             <p><strong>Descripción:</strong> Estamos buscando un desarrollador web con experiencia en HTML, CSS y JavaScript. Se requiere conocimientos en frameworks como React o Angular.</p>
             <p><strong>Requisitos:</strong> Experiencia mínima de 2 años, manejo de bases de datos SQL y NoSQL.</p>
             <p><strong>Fecha de publicación:</strong> 17 de junio de 2024</p>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobFormModal">Publicar Empleo</button>
-        </div>
-
-        <div class="oferta">
-            <h2>Diseñador Gráfico</h2>
-            <p><strong>Empresa:</strong> CreativosX</p>
-            <p><strong>Ubicación:</strong> Ciudad Creativa</p>
-            <p><strong>Descripción:</strong> Estamos buscando un diseñador gráfico creativo y proactivo. Debe tener experiencia en Adobe Illustrator, Photoshop y otras herramientas de diseño.</p>
-            <p><strong>Requisitos:</strong> Portfolio de trabajos anteriores, capacidad para trabajar en equipo y bajo presión.</p>
-            <p><strong>Fecha de publicación:</strong> 15 de junio de 2024</p>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobFormModal">Publicar Empleo</button>
+            <button class="btn btn-primary">Aplicar Empleo</button>
         </div>
     </main>
 
@@ -87,49 +77,14 @@
         <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal fade" id="jobFormModal" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="jobFormModalLabel">Formulario de Publicación de Empleo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="post">
-                        <div class="mb-3">
-                            <label for="empresa" class="form-label">Empresa:</label>
-                            <input type="text" id="empresa" name="empresa" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ubicacion" class="form-label">Ubicación:</label>
-                            <input type="text" id="ubicacion" name="ubicacion" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción:</label>
-                            <textarea id="descripcion" name="descripcion" rows="4" class="form-control" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="requisitos" class="form-label">Requisitos:</label>
-                            <textarea id="requisitos" name="requisitos" rows="4" class="form-control" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha" class="form-label">Fecha de publicación:</label>
-                            <input type="date" id="fecha" name="fecha" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Publicar</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-        <script src="js/boton.js"></script>
-        <script src="js/cerrar_sesion.js"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"crossorigin="anonymous">
+    </script>
+    <script src="js/boton.js"></script>
+    <script src="js/cerrar_sesion.js"></script>
+
 </body>
 </html>

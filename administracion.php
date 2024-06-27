@@ -69,17 +69,12 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contactos</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Acerca de</a>
-          </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
             <div class="dropdown-menu" data-bs-popper="static">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#" id="agregarNoticia">Crear Noticia</a>
+              <a class="dropdown-item" href="#" id="crearEmpleo">Crear Empleo</a>
               <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
             </div>
           </li>
         </ul>
@@ -89,126 +84,225 @@
     </div>
   </nav>
 </header>
+<h1 class="text-center mb-4" style="margin-top: 50px;">Administración</h1>
 <main class="d-flex">
-<h1 class="text-center mb-4">Administración</h1>
-  <div class="table-responsive">
-    <div class="table-header">
-      <h2>Listado Noticias</h2>
-      <button class="agregar" type="button" onclick="openModal('agregarModal')">
-        <span class="agregar__text">Nuevo</span>
-        <span class="agregar__icon">
-          <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <line x1="12" x2="12" y1="5" y2="19"></line>
-            <line x1="5" x2="19" y1="12" y2="12"></line>
-          </svg>
-        </span>
-      </button>
+  <section class="contenedor" id="contenedorNoticia" style="display:none;">
+    <div class="table-responsive">
+      <div class="table-header">
+        <h2>Noticias Creadas</h2>
+        <button class="agregar" type="button" onclick="openModal('agregarModal')">
+          <span class="agregar__text">Nuevo</span>
+          <span class="agregar__icon">
+            <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" x2="12" y1="5" y2="19"></line>
+              <line x1="5" x2="19" y1="12" y2="12"></line>
+            </svg>
+          </span>
+        </button>
+      </div>
+      <table class="table table-striped table-hover text-center">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Título</th>
+            <th scope="col">Contenido</th>
+            <th scope="col">Imagen</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php
+          // Incluir el archivo de configuración para la conexión a la base de datos
+          require_once 'obj/crud.php';
+
+          $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+          if ($conn->connect_error) {
+              die("Conexión fallida: " . $conn->connect_error);
+          }
+
+          $crud = new Crud($conn);
+          $result = $crud->getNoticias();
+
+          if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                  echo '<tr>';
+                  echo '<td scope="row">' . $row['id_contenido'] . '</td>';
+                  echo '<td>' . $row['titulo'] . '</td>';
+                  echo '<td>' . substr($row['cuerpo'], 0, 50) . '...</td>';
+                  echo '<td>';
+                  if ($row['foto']) {
+                      echo '<img src="' . $row['foto'] . '" alt="Noticia" width="80">';
+                  } else {
+                      echo 'No hay ninguna imagen';
+                  }
+                  echo '</td>';
+                  echo '<td>
+                            <div class="botones">
+                              <button class="bin-button" type="button" onclick="openEliminarModal(' . $row['id_contenido'] . ')">
+                                <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+                                  <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
+                                </svg>
+                                <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <mask id="path-1-inside-1_8_19" fill="white">
+                                    <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
+                                  </mask>
+                                  <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
+                                  <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                                  <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+                                </svg>
+                              </button>
+                              <button class="edit-button" type="button" 
+                                      data-id="' . $row['id_contenido'] . '" 
+                                      data-titulo="' . htmlspecialchars($row['titulo'], ENT_QUOTES, 'UTF-8') . '" 
+                                      data-contenido="' . htmlspecialchars($row['cuerpo'], ENT_QUOTES, 'UTF-8') . '">
+                                <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
+                                  <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
+                                </svg>
+                              </button>
+                            </div>            
+                          </td>';
+                  echo '</tr>';
+              }
+          } else {
+              echo '<tr><td colspan="5">No hay noticias disponibles.</td></tr>';
+          }
+          $conn->close();
+        ?>
+
+        </tbody>
+      </table>
     </div>
+  </section>
+  <section class="contenedor" id="contenedorBolsaTrabajo" style="display:none;">
+  <div class="table-responsive">
+      <div class="table-header">
+        <h2>Empleos creados</h2>
+        <button class="agregar" type="button">
+          <span class="agregar__text">Nuevo</span>
+          <span class="agregar__icon">
+            <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" x2="12" y1="5" y2="19"></line>
+              <line x1="5" x2="19" y1="12" y2="12"></line>
+            </svg>
+          </span>
+        </button>
+      </div>
     <table class="table table-striped table-hover text-center">
       <thead>
-        <tr class="text-center">
-          <th scope="col">#</th>
-          <th scope="col">Título</th>
-          <th scope="col">Contenido</th>
-          <th scope="col">Imagen</th>
-          <th scope="col"></th>
-        </tr>
+          <tr class="text-center">
+              <th scope="col">#</th>
+              <th scope="col">Título</th>
+              <th scope="col">Contenido</th>
+              <th scope="col">Imagen</th>
+              <th scope="col"></th>
+          </tr>
       </thead>
       <tbody>
-      <?php
-        // Incluir el archivo de configuración para la conexión a la base de datos
-        require_once 'obj/crud.php';
-
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-
-        $crud = new Crud($conn);
-        $result = $crud->getNoticias();
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td scope="row">' . $row['id_contenido'] . '</td>';
-                echo '<td>' . $row['titulo'] . '</td>';
-                echo '<td>' . substr($row['cuerpo'], 0, 50) . '...</td>';
-                echo '<td>';
-                if ($row['foto']) {
-                    echo '<img src="' . $row['foto'] . '" alt="Noticia" width="80">';
-                } else {
-                    echo 'No hay ninguna imagen';
-                }
-                echo '</td>';
-                echo '<td>
-                          <div class="botones">
-                            <button class="bin-button" type="button" onclick="openEliminarModal(' . $row['id_contenido'] . ')">
-                              <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
-                                <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
-                              </svg>
-                              <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <mask id="path-1-inside-1_8_19" fill="white">
+          <tr>
+              <td scope="row">1</td>
+              <td>Noticia 1</td>
+              <td>Contenido de la noticia 1...</td>
+              <td><img src="path/to/image1.jpg" alt="Noticia 1" width="80"></td>
+              <td>
+                  <div class="botones">
+                      <button class="bin-button" type="button">
+                          <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+                              <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
+                          </svg>
+                          <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <mask id="path-1-inside-1_8_19" fill="white">
                                   <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
-                                </mask>
-                                <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
-                                <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
-                                <path d="M21 6V29" stroke="white" stroke-width="4"></path>
-                              </svg>
-                            </button>
-                            <button class="edit-button" type="button" 
-                                    data-id="' . $row['id_contenido'] . '" 
-                                    data-titulo="' . htmlspecialchars($row['titulo'], ENT_QUOTES, 'UTF-8') . '" 
-                                    data-contenido="' . htmlspecialchars($row['cuerpo'], ENT_QUOTES, 'UTF-8') . '">
-                              <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
-                                <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
-                              </svg>
-                            </button>
-                          </div>            
-                        </td>';
-                echo '</tr>';
-            }
-        } else {
-            echo '<tr><td colspan="5">No hay noticias disponibles.</td></tr>';
-        }
-        $conn->close();
-      ?>
-
+                              </mask>
+                              <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
+                              <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                              <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+                          </svg>
+                      </button>
+                      <!-- <button class="edit-button" type="button" data-bs-toggle="modal" data-bs-target="#jobFormModal">
+                          <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
+                              <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
+                          </svg>
+                      </button> -->
+                  </div>
+              </td>
+          </tr>
       </tbody>
     </table>
   </div>
+  </section>
+
 </main> 
+
+<!-- Modal -->
+<div class="modal fade" id="jobFormModal" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobFormModalLabel">Formulario de Publicación de Empleo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post">
+                    <div class="mb-3">
+                        <label for="empresa" class="form-label">Empresa:</label>
+                        <input type="text" id="empresa" name="empresa" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ubicacion" class="form-label">Ubicación:</label>
+                        <input type="text" id="ubicacion" name="ubicacion" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción:</label>
+                        <textarea id="descripcion" name="descripcion" rows="4" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="requisitos" class="form-label">Requisitos:</label>
+                        <textarea id="requisitos" name="requisitos" rows="4" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha de publicación:</label>
+                        <input type="date" id="fecha" name="fecha" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Publicar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php
 
-require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
+  require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
 
-$database = new DatabaseConnection();
-$conn = $database->getConnection();
+  $database = new DatabaseConnection();
+  $conn = $database->getConnection();
 
-$contentCreator = new ContentCreator($conn);
+  $contentCreator = new ContentCreator($conn);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['titulo']) && isset($_POST['contenido']) && isset($_POST['opcion']) && isset($_FILES['imagen'])) {
-        $titulo = $_POST['titulo'];
-        $cuerpo = $_POST['contenido'];
-        $tipo = $_POST['opcion'];
-        $imagen = $_FILES['imagen'];
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      if (isset($_POST['titulo']) && isset($_POST['contenido']) && isset($_POST['opcion']) && isset($_FILES['imagen'])) {
+          $titulo = $_POST['titulo'];
+          $cuerpo = $_POST['contenido'];
+          $tipo = $_POST['opcion'];
+          $imagen = $_FILES['imagen'];
 
-        $message = $contentCreator->addContent($titulo, $cuerpo, $tipo, $imagen);
-        echo $message;
-    } else {
-        echo 'Error: Faltan datos en el formulario.';
-    }
-}
+          $message = $contentCreator->addContent($titulo, $cuerpo, $tipo, $imagen);
+          echo $message;
+      } else {
+          echo 'Error: Faltan datos en el formulario.';
+      }
+  }
 
-$database->closeConnection();
+  $database->closeConnection();
 
 ?>
-
-
 
 <!-- Modal de creación de noticia -->
 <div id="agregarModal" class="modal">
@@ -285,26 +379,26 @@ $database->closeConnection();
 
 <?php
 
-require_once 'obj/crud.php';
+  require_once 'obj/crud.php';
 
-$database = new DatabaseConnection();
-$conn = $database->getConnection();
+  $database = new DatabaseConnection();
+  $conn = $database->getConnection();
 
-$contentEditor = new ContentEditor($conn);
+  $contentEditor = new ContentEditor($conn);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_contenido'])) {
-    error_log('Datos recibidos: ' . print_r($_POST, true));
-    error_log('Archivo subido: ' . print_r($_FILES, true));
-    $id = $_POST['id_contenido'];
-    $titulo = $_POST['titulo'];
-    $cuerpo = $_POST['contenido'];
-    $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : null;
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_contenido'])) {
+      error_log('Datos recibidos: ' . print_r($_POST, true));
+      error_log('Archivo subido: ' . print_r($_FILES, true));
+      $id = $_POST['id_contenido'];
+      $titulo = $_POST['titulo'];
+      $cuerpo = $_POST['contenido'];
+      $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : null;
 
-    $message = $contentEditor->editContent($id, $titulo, $cuerpo, $imagen);
-    echo $message;
-}
+      $message = $contentEditor->editContent($id, $titulo, $cuerpo, $imagen);
+      echo $message;
+  }
 
-$database->closeConnection();
+  $database->closeConnection();
 
 ?>
 
@@ -329,30 +423,27 @@ $database->closeConnection();
   </div>
 </div>
 
-
-
 <?php
 
-require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y CategoryManager
+  require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y CategoryManager
 
-$database = new DatabaseConnection();
-$conn = $database->getConnection();
+  $database = new DatabaseConnection();
+  $conn = $database->getConnection();
 
-$categoryManager = new CategoryManager($conn);
+  $categoryManager = new CategoryManager($conn);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ingrese_categoria']) && isset($_POST['ingrese_estado_categoria'])) {
-    $categoria = $_POST['ingrese_categoria'];
-    $estado = $_POST['ingrese_estado_categoria'];
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ingrese_categoria']) && isset($_POST['ingrese_estado_categoria'])) {
+      $categoria = $_POST['ingrese_categoria'];
+      $estado = $_POST['ingrese_estado_categoria'];
 
-    $message = $categoryManager->addCategory($categoria, $estado);
-    echo $message;
-}
+      $message = $categoryManager->addCategory($categoria, $estado);
+      echo $message;
+  }
 
-$database->closeConnection();
+  $database->closeConnection();
 
 ?>
   
-
 <!-- moadal para crear una nueva categoría -->
 <div id="agregar" class="modal" style="display: none;">
   <div class="modal-content">
@@ -414,53 +505,67 @@ $database->closeConnection();
 </body>
 
 <script>
-function showMessage() {
-    document.getElementById('infoMessage').style.display = 'flex';
-}
-document.querySelector('.info__close').addEventListener('click', function() {
-    document.getElementById('infoMessage').style.display = 'none';
-});
-// Llama a la función showMessage() si hay un mensaje PHP
-<?php if (isset($message) && !empty($message)): ?>
-    showMessage();
-<?php endif; ?>
-</script>
-
-<script>
-function showMessageError() {
-    document.getElementById('ErrorMessage').style.display = 'flex';
-}
-document.querySelector('.error__close').addEventListener('click', function() {
-    document.getElementById('ErrorMessage').style.display = 'none';
-});
-// Llama a la función showMessage() si hay un mensaje PHP
-<?php if (isset($messagError) && !empty($messagError)): ?>
-  howMessageError();
-<?php endif; ?>
-</script>
-
-<script>
-function openEditModal(id, titulo, contenido) {
-  document.getElementById('id_contenido').value = id;
-  document.getElementById('titulo').value = titulo;
-  document.getElementById('contenido').value = contenido;
-  document.getElementById('editModal').style.display = 'block';
-}
-
-function closeModal(modalId) {
-  document.getElementById(modalId).style.display = 'none';
-}
-
-// Example usage with a button to open the modal
-document.querySelectorAll('.edit-button').forEach(button => {
-  button.addEventListener('click', function() {
-    const id = this.getAttribute('data-id');
-    const titulo = this.getAttribute('data-titulo');
-    const contenido = this.getAttribute('data-contenido');
-    openEditModal(id, titulo, contenido);
+  function showMessage() {
+      document.getElementById('infoMessage').style.display = 'flex';
+  }
+  document.querySelector('.info__close').addEventListener('click', function() {
+      document.getElementById('infoMessage').style.display = 'none';
   });
-});
+  // Llama a la función showMessage() si hay un mensaje PHP
+  <?php if (isset($message) && !empty($message)): ?>
+      showMessage();
+  <?php endif; ?>
 </script>
 
+<script>
+  function showMessageError() {
+      document.getElementById('ErrorMessage').style.display = 'flex';
+  }
+  document.querySelector('.error__close').addEventListener('click', function() {
+      document.getElementById('ErrorMessage').style.display = 'none';
+  });
+  // Llama a la función showMessage() si hay un mensaje PHP
+  <?php if (isset($messagError) && !empty($messagError)): ?>
+    howMessageError();
+  <?php endif; ?>
+</script>
+
+<script>
+  function openEditModal(id, titulo, contenido) {
+    document.getElementById('id_contenido').value = id;
+    document.getElementById('titulo').value = titulo;
+    document.getElementById('contenido').value = contenido;
+    document.getElementById('editModal').style.display = 'block';
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
+
+  // Example usage with a button to open the modal
+  document.querySelectorAll('.edit-button').forEach(button => {
+    button.addEventListener('click', function() {
+      const id = this.getAttribute('data-id');
+      const titulo = this.getAttribute('data-titulo');
+      const contenido = this.getAttribute('data-contenido');
+      openEditModal(id, titulo, contenido);
+    });
+  });
+</script>
+
+<script>
+  document.getElementById('agregarNoticia').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('contenedorBolsaTrabajo').style.display = 'none'; // Ocultar otra sección
+    document.getElementById('contenedorNoticia').style.display = 'block'; // Mostrar esta sección
+  });
+
+  document.getElementById('crearEmpleo').addEventListener('click', function(event) {
+      event.preventDefault();
+      document.getElementById('contenedorNoticia').style.display = 'none'; // Ocultar otra sección
+      document.getElementById('contenedorBolsaTrabajo').style.display = 'block'; // Mostrar esta sección
+  });
+
+</script>
 
 </html>
