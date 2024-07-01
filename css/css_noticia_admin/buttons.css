@@ -120,33 +120,53 @@
   transform: scale(0.9);
 }
 
-/* Edidt empleo */
 
-
-/* Gear Button */
-.gear-button {
+/* Editar Button */
+.editar-button {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 55px;
   height: 55px;
   border-radius: 15px;
-  background-color: var(--color-gear-bg);
+  background-color: var(--color-edit-bg);
   cursor: pointer;
-  border: 3px solid var(--color-gear-border);
+  border: 3px solid var(--color-edit-border);
   transition-duration: 0.3s;
 }
 
-.gear-icon {
+.editar-icon {
   width: 24px;
   height: 24px;
   transition-duration: 0.3s;
 }
 
-.gear-button:hover {
-  background-color: var(--color-gear-hover-bg);
+.editar-button:hover {
+  background-color: var(--color-edit-hover-bg);
 }
 
-.gear-button:active {
+.editar-button:active {
   transform: scale(0.9);
 }
+
+/* Eliminar button */
+.eliminaEmpleo {
+  background-color: var(--button-delete-bg);
+  color: var(--button-text);
+  border: none;
+}
+
+.eliminaEmpleo:hover {
+  background-color: var(--button-delete-hover-bg);
+}
+
+.eliminaEmpleo {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto 0;
+  display: block;
+}
+

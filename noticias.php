@@ -1,3 +1,7 @@
+<?php
+    include_once 'obj/bd.php';
+    require_once 'obj/crudNoticia.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,33 +10,39 @@
     <title>Noticias</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/css_noticia_admin/noticias.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/layout.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/variables.css">
+    <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-                <a class="navbar-brand" href="index.php">CIMO</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="#">CIMO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <?php include_once('obj/bd.php'); ?>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="index.php">Inicio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contactos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Acerca de</a>
-                        </li>
+                        <?php if (verificar_sesion()): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="administracion.php">Administración</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="login.html">Login</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                     <form class="d-flex">
-                        <button class="boton-social" id="social">
+                        <button class="boton-social" id="social"> 
                             <span class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33" viewBox="0 0 512 512" height="33">
                                     <g fill-rule="evenodd" clip-rule="evenodd">
@@ -42,61 +52,32 @@
                                 </svg>
                             </span>
                             <span class="text1 text-dark">Síguenos</span>
-                            <span class="text2">1,2k</span>
+                            <span class="text2">1,2k</span> 
                         </button>
+                        <?php if (verificar_sesion()): ?>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                     </form>
                 </div>
+
             </div>
         </nav>
-    </header>
+    </header>   
 
     <main class="container mt-4">
-    <h1 class="text-center mb-4">Noticias</h1>
-    <?php
-        require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentManager
-
-        $database = new DatabaseConnection();
-        $conn = $database->getConnection();
-
-        $contentManager = new ContentManager($conn);
-        $contents = $contentManager->getContents();
-
-        $database->closeConnection();
-    ?>  
-
-    <?php if (!empty($contents)): ?>
-        <?php foreach ($contents as $row): ?>
-            <div class="tarjeta_noticia">
-                <div class="tarjeta_header">
-                    <h2 class="text-center"><?php echo $row['titulo']; ?></h2>
-                </div>
-                <div class="tarjeta_body">
-                    <p class="card-text"><?php echo $row['cuerpo']; ?></p>
-                    <div class="image">
-                        <?php if ($row['foto']): ?>
-                            <img src="<?php echo $row['foto']; ?>" alt="Imagen noticia <?php echo $row['id_contenido']; ?>">
-                        <?php else: ?>
-                            <img src="img/default-image.jpg" alt="Imagen por defecto">
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <div class="footer">
-                    <p class="date">
-                        <?php 
-                        if (isset($row['fecha_creacion'])) {
-                            echo date("d/m/Y", strtotime($row['fecha_creacion'])); 
-                        } else {
-                            echo "Fecha no disponible";
-                        }
-                        ?>
-                    </p>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No hay noticias disponibles. Empieze a crearlas 😁👍</p>
-    <?php endif; ?>
-</main>
+        <h1 class="text-center mb-4">Noticias</h1>
+        <?php
+            $tarjetasNoticias = new TarjetaMostrarNoticia();
+            $tarjetasNoticias->mostrarNoticias();
+        ?>
+    </main>
 
 
     <footer class="text-center mt-4">

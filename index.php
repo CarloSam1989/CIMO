@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="bolsa.php">Bolsa trabajo</a>
+                            <a class="nav-link" href="bolsa.php">Aplicar Empleo</a>
                         </li>
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item">
@@ -107,49 +107,13 @@
             </div>
         </div>
 
-        <?php
-            require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y ContentManager
-
-            $database = new DatabaseConnection();
-            $conn = $database->getConnection();
-
-            $contentManager = new ContentManager($conn);
-            $contents = $contentManager->getContents();
-
-            $database->closeConnection();
-        ?>  
-
         <section class="section-cards">
-            <div class="cards-container">
-                <?php if (!empty($contents)): ?>
-                    <?php foreach ($contents as $row): ?>
-                        <div class="card col-sm-12 col-md-6">
-                            <div class="card-image">
-                                <?php if ($row['foto']): ?>
-                                    <img src="<?php echo $row['foto']; ?>" alt="Imagen noticia <?php echo $row['id_contenido']; ?>">
-                                <?php else: ?>
-                                    <img src="img/default-image.jpg" alt="Imagen por defecto">
-                                <?php endif; ?>
-                            </div>
-                            <p class="card-title text-primary"><?php echo $row['titulo']; ?></p>
-                            <p class="card-body"><?php echo substr($row['cuerpo'], 0, 100); ?>... <a href="noticias.php">Leer más</a></p>
-                            <p class="footer">
-                                <span class="date">
-                                    <?php 
-                                    if (isset($row['fecha_creacion'])) {
-                                        echo date("d/m/Y", strtotime($row['fecha_creacion'])); 
-                                    } else {
-                                        echo "Fecha no disponible";
-                                    }
-                                    ?>
-                                </span>
-                            </p>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No hay noticias disponibles. Empieze a crearlas 😁👍</p>
-                <?php endif; ?>
-            </div>
+        <?php
+        require_once 'obj/crudNoticia.php';
+
+        $tarjetasNoticiasPrincipales = new TarjetaNoticiaPrincipal();
+        $tarjetasNoticiasPrincipales->mostrarNoticias();
+        ?>    
         </section>        
     </main>
 
@@ -187,6 +151,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
     <script src="js/carrusel.js"></script>
     <script src="js/boton.js"></script>
     

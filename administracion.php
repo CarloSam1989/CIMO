@@ -1,36 +1,27 @@
 <?php
-  // Iniciar buffer de salida
-  ob_start();
+  include_once 'obj/bd.php';
+  require_once 'obj/crudNoticia.php';
+  require_once 'obj/crudBolsa.php';
+  
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['puesto']) && !isset($_POST['editarEmpleo'])) {
+        // Inserción de empleo
+        $puesto = $_POST['puesto'];
+        $ubicacion = $_POST['ubicacion'];
+        $descripcion = $_POST['descripcion'];
+        $requisitos = $_POST['requisitos'];
 
-  include_once 'obj/crud.php';
+        $empleosInsertar = new EmpleosInsertar();
+        $empleosInsertar->insertarEmpleo($puesto, $ubicacion, $descripcion, $requisitos);
+    }
+  } 
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = intval($_POST['id']);
 
-  // Código de conexión y operaciones
-  $database = new DatabaseConnection();
-  $conn = $database->getConnection();
-  $contentCreator = new ContentCreator($conn);
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      if (isset($_POST['titulo']) && isset($_POST['contenido']) && isset($_POST['opcion']) && isset($_FILES['imagen'])) {
-          $titulo = $_POST['titulo'];
-          $cuerpo = $_POST['contenido'];
-          $tipo = $_POST['opcion'];
-          $imagen = $_FILES['imagen'];
-
-          $message = $contentCreator->addContent($titulo, $cuerpo, $tipo, $imagen);
-          if ($message !== true) {
-              echo $message;
-          }
-      } else {
-          echo 'Error: Faltan datos en el formulario.';
-      }
+    $empleosEliminar = new EmpleosEliminar();
+    $empleosEliminar->eliminarEmpleo($id);
   }
-
-  $database->closeConnection();
-
-  // Enviar el buffer de salida
-  ob_end_flush();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -52,520 +43,409 @@
 </head>
 
 <body> 
-<header>
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-      <div class="container-fluid">
-        <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-        <a class="navbar-brand" href="index.php">CIMO</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="noticias.php">Noticias</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contactos</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
-            <div class="dropdown-menu" data-bs-popper="static">
-              <a class="dropdown-item" href="#" id="agregarNoticia">Crear Noticia</a>
-              <a class="dropdown-item" href="#" id="crearEmpleo">Crear Empleo</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        </ul>
-        <form class="d-flex">
-        </form>
-      </div>
-    </div>
-  </nav>
-</header>
-<h1 class="text-center mb-4" style="margin-top: 50px;">Administración</h1>
-<main class="d-flex">
-  <section class="contenedor" id="contenedorNoticia" style="display:none;">
-    <div class="table-responsive">
-      <div class="table-header">
-        <h2>Noticias Creadas</h2>
-        <button class="agregar" type="button" onclick="openModal('agregarModal')">
-          <span class="agregar__text">Nuevo</span>
-          <span class="agregar__icon">
-            <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-              <line x1="12" x2="12" y1="5" y2="19"></line>
-              <line x1="5" x2="19" y1="12" y2="12"></line>
-            </svg>
-          </span>
-        </button>
-      </div>
-      <table class="table table-striped table-hover text-center">
-        <thead>
-          <tr class="text-center">
-            <th scope="col">#</th>
-            <th scope="col">Título</th>
-            <th scope="col">Contenido</th>
-            <th scope="col">Imagen</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-        <?php
-          // Incluir el archivo de configuración para la conexión a la base de datos
-          require_once 'obj/crud.php';
-
-          $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-          if ($conn->connect_error) {
-              die("Conexión fallida: " . $conn->connect_error);
-          }
-
-          $crud = new Crud($conn);
-          $result = $crud->getNoticias();
-
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  echo '<tr>';
-                  echo '<td scope="row">' . $row['id_contenido'] . '</td>';
-                  echo '<td>' . $row['titulo'] . '</td>';
-                  echo '<td>' . substr($row['cuerpo'], 0, 50) . '...</td>';
-                  echo '<td>';
-                  if ($row['foto']) {
-                      echo '<img src="' . $row['foto'] . '" alt="Noticia" width="80">';
-                  } else {
-                      echo 'No hay ninguna imagen';
-                  }
-                  echo '</td>';
-                  echo '<td>
-                            <div class="botones">
-                              <button class="bin-button" type="button" onclick="openEliminarModal(' . $row['id_contenido'] . ')">
-                                <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
-                                  <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
-                                </svg>
-                                <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <mask id="path-1-inside-1_8_19" fill="white">
-                                    <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
-                                  </mask>
-                                  <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
-                                  <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
-                                  <path d="M21 6V29" stroke="white" stroke-width="4"></path>
-                                </svg>
+  <header>
+      <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+          <div class="container-fluid">
+              <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
+              <a class="navbar-brand" href="index.php">CIMO</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <?php include_once('obj/bd.php'); ?>
+              <div class="collapse navbar-collapse" id="navbarColor01">
+                  <ul class="navbar-nav me-auto">
+                      <?php if (verificar_sesion()): ?>
+                          <li class="nav-item">
+                              <a class="nav-link" href="noticias.php">Noticias Creadas</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="bolsa.php">Empleos Creados</a>
+                          </li>
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
+                              <div class="dropdown-menu" data-bs-popper="static">
+                                  <a class="dropdown-item" href="#" id="agregarNoticia">Noticias</a>
+                                  <a class="dropdown-item" href="#" id="crearEmpleo">Empleos</a>
+                                  <a class="dropdown-item" href="#" id="mostrarEmpleos">Bacantes</a>
+                                  <a class="dropdown-item" href="#" id="">Modal</a>
+                              </div>
+                          </li>
+                      <?php else: ?>
+                          <li class="nav-item">
+                              <a class="nav-link" href="login.html">Login</a>
+                          </li>
+                      <?php endif; ?>
+                  </ul>
+                  <form class="d-flex">
+                      <?php if (verificar_sesion()): ?>
+                          <div class="dropdown">
+                              <button class="btn btn-link dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-user"></i>
                               </button>
-                              <button class="edit-button" type="button" 
-                                      data-id="' . $row['id_contenido'] . '" 
-                                      data-titulo="' . htmlspecialchars($row['titulo'], ENT_QUOTES, 'UTF-8') . '" 
-                                      data-contenido="' . htmlspecialchars($row['cuerpo'], ENT_QUOTES, 'UTF-8') . '">
-                                <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
-                                  <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
-                                </svg>
-                              </button>
-                            </div>            
-                          </td>';
-                  echo '</tr>';
-              }
-          } else {
-              echo '<tr><td colspan="5">No hay noticias disponibles.</td></tr>';
-          }
-          $conn->close();
-        ?>
-
-        </tbody>
-      </table>
-    </div>
-  </section>
-  <section class="contenedor" id="contenedorBolsaTrabajo" style="display:none;">
-  <div class="table-responsive">
-      <div class="table-header">
-        <h2>Empleos creados</h2>
-        <button class="agregar" type="button">
-          <span class="agregar__text">Nuevo</span>
-          <span class="agregar__icon">
-            <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-              <line x1="12" x2="12" y1="5" y2="19"></line>
-              <line x1="5" x2="19" y1="12" y2="12"></line>
-            </svg>
-          </span>
-        </button>
-      </div>
-    <table class="table table-striped table-hover text-center">
-      <thead>
-          <tr class="text-center">
-              <th scope="col">#</th>
-              <th scope="col">Título</th>
-              <th scope="col">Contenido</th>
-              <th scope="col">Imagen</th>
-              <th scope="col"></th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td scope="row">1</td>
-              <td>Noticia 1</td>
-              <td>Contenido de la noticia 1...</td>
-              <td><img src="path/to/image1.jpg" alt="Noticia 1" width="80"></td>
-              <td>
-                  <div class="botones">
-                      <button class="bin-button" type="button">
-                          <svg class="bin-top" viewBox="0 0 39 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
-                              <line x1="12" y1="1.5" x2="26.0357" y2="1.5" stroke="white" stroke-width="3"></line>
-                          </svg>
-                          <svg class="bin-bottom" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <mask id="path-1-inside-1_8_19" fill="white">
-                                  <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
-                              </mask>
-                              <path d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z" fill="white" mask="url(#path-1-inside-1_8_19)"></path>
-                              <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
-                              <path d="M21 6V29" stroke="white" stroke-width="4"></path>
-                          </svg>
-                      </button>
-                      <!-- <button class="edit-button" type="button" data-bs-toggle="modal" data-bs-target="#jobFormModal">
-                          <svg class="edit-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" fill="white"></path>
-                              <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L14.86 5.39L18.61 9.14L20.71 7.04Z" fill="white"></path>
-                          </svg>
-                      </button> -->
-                  </div>
-              </td>
-          </tr>
-      </tbody>
-    </table>
-  </div>
-  </section>
-
-</main> 
-
-<!-- Modal -->
-<div class="modal fade" id="jobFormModal" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="jobFormModalLabel">Formulario de Publicación de Empleo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="post">
-                    <div class="mb-3">
-                        <label for="empresa" class="form-label">Empresa:</label>
-                        <input type="text" id="empresa" name="empresa" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ubicacion" class="form-label">Ubicación:</label>
-                        <input type="text" id="ubicacion" name="ubicacion" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <textarea id="descripcion" name="descripcion" rows="4" class="form-control" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="requisitos" class="form-label">Requisitos:</label>
-                        <textarea id="requisitos" name="requisitos" rows="4" class="form-control" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha de publicación:</label>
-                        <input type="date" id="fecha" name="fecha" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Publicar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </form>
-            </div>
+                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
+                              </ul>
+                          </div>
+                      <?php endif; ?>
+                  </form>
+              </div>
+          </div>
+      </nav>
+  </header>
+  <h1 class="text-center mb-4" style="margin-top: 50px;">Administración</h1>
+  <main class="d-flex">
+    <section class="contenedor" id="contenedorNoticia" style="display:none;">
+      <div class="table-responsive">
+        <div class="table-header">
+          <h2>Noticias Creadas</h2>
+          <button class="agregar" type="button"  data-bs-toggle="modal" data-bs-target="#crearNoticiaModal">
+            <span class="agregar__text">Nuevo</span>
+            <span class="agregar__icon">
+              <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <line x1="12" x2="12" y1="5" y2="19"></line>
+                <line x1="5" x2="19" y1="12" y2="12"></line>
+              </svg>
+            </span>
+          </button>
         </div>
-    </div>
-</div>
-
-
-<?php
-
-  require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
-
-  $database = new DatabaseConnection();
-  $conn = $database->getConnection();
-
-  $contentCreator = new ContentCreator($conn);
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      if (isset($_POST['titulo']) && isset($_POST['contenido']) && isset($_POST['opcion']) && isset($_FILES['imagen'])) {
-          $titulo = $_POST['titulo'];
-          $cuerpo = $_POST['contenido'];
-          $tipo = $_POST['opcion'];
-          $imagen = $_FILES['imagen'];
-
-          $message = $contentCreator->addContent($titulo, $cuerpo, $tipo, $imagen);
-          echo $message;
-      } else {
-          echo 'Error: Faltan datos en el formulario.';
-      }
-  }
-
-  $database->closeConnection();
-
-?>
-
-<!-- Modal de creación de noticia -->
-<div id="agregarModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Crear nueva noticia</h2>
-      <span class="close-btn" onclick="closeModal('agregarModal')">&times;</span>
-    </div>
-    <form id="nuevaNoticia" action="administracion.php" method="post" enctype="multipart/form-data">
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo" name="titulo" required>
-      <label for="contenido">Contenido:</label>
-      <textarea id="contenido" name="contenido"></textarea>
-      <label for="imagen">Subir imagen:</label>
-      <input type="file" id="imagen" name="imagen" accept="image/*">
-      <label for="opcion">Noticia:</label>
-      <div class="modal-header">
-
-        <select id="opcion" class="opciones" name="opcion">
-
-          <?php
-
-            require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection
-
-            $database = new DatabaseConnection();
-            $conn = $database->getConnection();
-
-            $categoryManager = new CategoryManager($conn);
-            $categories = $categoryManager->getActiveCategories();
-
-            $database->closeConnection();
-
-            foreach ($categories as $category) {
-                echo '<option value="' . $category['tipo'] . '">' . $category['tipo'] . '</option>';
-            }
-
-          ?>
-
-        </select>
-         <button type="button" onclick="agregarTipo()" class="crear">
-          <span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path>
-            </svg> 
-            Agregar categoría
-          </span>
-        </button>
+        <?php
+          $noticiasTabla = new NoticiasTabla();
+          $noticiasTabla->mostrarNoticias();
+        ?>
       </div>
-      <button type="submit" id="createButton" onclick="showMessage()">Crear</button>
-    </form>
+    </section>
+    <section class="contenedor" id="contenedorBolsaTrabajo" style="display:none;">
+      <div class="table-responsive">
+          <div class="table-header">
+            <h2>Empleos creados</h2>
+            <button class="agregar" type="button" data-bs-toggle="modal" data-bs-target="#crearEmpleoModal">
+              <span class="agregar__text">Nuevo</span>
+              <span class="agregar__icon">
+                <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="12" x2="12" y1="5" y2="19"></line>
+                  <line x1="5" x2="19" y1="12" y2="12"></line>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <?php
+            $empleosTabla = new EmpleosTabla();
+            $empleosTabla->mostrarEmpleos();
+          ?>
+      </div>  
+    </section>
+    <section class="contenedor" id="contenedorEmpleos" style="display:none;">
+      <div class="table-responsive">
+          <div class="table-header">
+            <h2>Bacantes</h2>
+          </div>
+          <?php
+            require_once 'obj/crudBolsa.php';
+
+            $mostrarAplicaciones = new MostrarAplicaciones();
+            $mostrarAplicaciones->mostrarAplicaciones();
+          ?>
+      </div>  
+    </section>
+  </main> 
+
+  <!-- Modal para crear noticias -->
+  <div class="modal fade" id="crearNoticiaModal" tabindex="-1" aria-labelledby="crearNoticiaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="crearNoticiaModalLabel">Crear Noticia</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="crearNoticiaForm" action="obj/noticia.php" method="post" enctype="multipart/form-data">
+                      <div class="mb-3">
+                          <label for="titulo" class="form-label">Título:</label>
+                          <input type="text" id="titulo" name="titulo" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="contenido" class="form-label">Contenido:</label>
+                          <textarea id="contenido" name="contenido" rows="4" class="form-control" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="imagen" class="form-label">Imagen:</label>
+                          <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Crear Noticia</button>
+                  </form>
+              </div>
+          </div>
+      </div>
   </div>
-</div>
-
-<!-- Modal de eliminación -->
-<div id="eliminarModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4>¿Está seguro en eliminar la noticia?</h4>
-    </div>
-    <div id="viewContent">
-      <p>¿Está seguro de que desea eliminar todo el contenido de la noticia? 
-        Esta acción es irreversible y se perderán todos los datos de ella.</p>
-    </div>
-    <div class="modal-footer">
-      <form id="formEliminar" action="administracion.php" method="post">
-        <input type="hidden" id="idEliminar" name="idEliminar">
-        <button class="btnmodal_eliminar" type="submit">Eliminar</button>
-        <button class="btn-cancel" type="button" onclick="closeModal('eliminarModal')">Cancelar</button>
-      </form>
-    </div>
+  <!-- Modal para editar noticia -->
+  <div class="modal fade" id="editarNoticiaModal" tabindex="-1" aria-labelledby="editarNoticiaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="editarNoticiaModalLabel">Editar Noticia</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="editarNoticiaForm" action="obj/noticia.php" method="post" enctype="multipart/form-data">
+                      <input type="hidden" id="editar-noticia-id" name="noticiaId">
+                      <div class="mb-3">
+                          <label for="editar-titulo" class="form-label">Título:</label>
+                          <input type="text" id="editar-titulo" name="titulo" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="editar-contenido" class="form-label">Contenido:</label>
+                          <textarea id="editar-contenido" name="contenido" rows="4" class="form-control" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="editar-imagen" class="form-label">Imagen (opcional):</label>
+                          <input type="file" id="editar-imagen" name="imagen" class="form-control" accept="image/*">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                  </form>
+              </div>
+          </div>
+      </div>
   </div>
-</div>
-
-<?php
-
-  require_once 'obj/crud.php';
-
-  $database = new DatabaseConnection();
-  $conn = $database->getConnection();
-
-  $contentEditor = new ContentEditor($conn);
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_contenido'])) {
-      error_log('Datos recibidos: ' . print_r($_POST, true));
-      error_log('Archivo subido: ' . print_r($_FILES, true));
-      $id = $_POST['id_contenido'];
-      $titulo = $_POST['titulo'];
-      $cuerpo = $_POST['contenido'];
-      $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : null;
-
-      $message = $contentEditor->editContent($id, $titulo, $cuerpo, $imagen);
-      echo $message;
-  }
-
-  $database->closeConnection();
-
-?>
-
-
-<!-- Modal para editar noticia -->
-<div id="editModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Editar noticia</h2>
-      <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
-    </div>
-    <form id="nuevaNoticia" method="POST" action="administracion.php" enctype="multipart/form-data">
-      <input type="hidden" id="id_contenido" name="id_contenido">
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo" name="titulo" required>
-      <label for="contenido">Contenido:</label>
-      <textarea id="contenido" name="contenido"></textarea>
-      <label for="imagen">Subir imagen:</label>
-      <input type="file" id="imagen" name="imagen" accept="image/*">
-      <button type="submit">Editar</button>
-    </form>
+  <!-- Modal para eliminar noticia -->
+  <div class="modal fade" id="eliminarNoticiaModal" tabindex="-1" aria-labelledby="eliminarNoticiaModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="eliminarNoticiaModalLabel">¿ESTÁ SEGURO EN ELIMINAR ESTA NOTICIA?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <p>¿Está seguro de que desea eliminar todo el contenido de la noticia? Esta acción es irreversible y se perderán todos los datos de ella.</p>
+                  <input type="hidden" id="noticiaIdEliminar" value="">
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" id="confirmarEliminarNoticia">Eliminar</button>
+              </div>
+          </div>
+      </div>
   </div>
-</div>
 
-<?php
 
-  require_once 'obj/crud.php'; // Asegúrate de que este archivo tenga la clase DatabaseConnection y CategoryManager
-
-  $database = new DatabaseConnection();
-  $conn = $database->getConnection();
-
-  $categoryManager = new CategoryManager($conn);
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ingrese_categoria']) && isset($_POST['ingrese_estado_categoria'])) {
-      $categoria = $_POST['ingrese_categoria'];
-      $estado = $_POST['ingrese_estado_categoria'];
-
-      $message = $categoryManager->addCategory($categoria, $estado);
-      echo $message;
-  }
-
-  $database->closeConnection();
-
-?>
-  
-<!-- moadal para crear una nueva categoría -->
-<div id="agregar" class="modal" style="display: none;">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Crear Categoría</h2>
-      <span class="close-btn" onclick="cerrarModal()">&times;</span> 
-    </div>
-    <form id="nuevaCategoria" action="administracion.php" method="POST">
-      <label for="categoria">Nombre:</label>
-      <input type="text" id="titulo" name="ingrese_categoria" required>
-      
-      <label for="estado">Estado:</label>
-      <input type="text" id="estado" name="ingrese_estado_categoria" required>
-      
-      <button type="submit">Agregar</button>
-    </form>
-
+  <!-- Modal crear empleo -->
+  <div class="modal fade" id="crearEmpleoModal" tabindex="-1" aria-labelledby="crearEmpleoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="jobFormModalLabel">Publicar Empleo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form action="administracion.php" method="post"> <!-- Cambiado para enviar a administracion.php -->
+                      <div class="mb-3">
+                          <label for="puesto" class="form-label">Puesto:</label>
+                          <input type="text" id="puesto" name="puesto" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="ubicacion" class="form-label">Ubicación:</label>
+                          <input type="text" id="ubicacion" name="ubicacion" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="descripcion" class="form-label">Descripción:</label>
+                          <textarea id="descripcion" name="descripcion" rows="4" class="form-control" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="requisitos" class="form-label">Requisitos:</label>
+                          <textarea id="requisitos" name="requisitos" rows="4" class="form-control" required></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Publicar</button>
+                  </form>
+              </div>
+          </div>
+      </div>
   </div>
-</div>
+  <!-- Modal para editar un empleo -->
+  <div class="modal fade" id="editarEmpleoModal" tabindex="-1" aria-labelledby="editarEmpleoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="editarEmpleoModalLabel">Editar Empleo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="editarEmpleoForm" action="administracion.php" method="post">
+                      <input type="hidden" id="editar-empleo-id" name="empleoId">
+                      <div class="mb-3">
+                          <label for="editar-puesto" class="form-label">Puesto:</label>
+                          <input type="text" id="editar-puesto" name="puesto" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="editar-ubicacion" class="form-label">Ubicación:</label>
+                          <input type="text" id="editar-ubicacion" name="ubicacion" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="editar-descripcion" class="form-label">Descripción:</label>
+                          <textarea id="editar-descripcion" name="descripcion" rows="4" class="form-control" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="editar-requisitos" class="form-label">Requisitos:</label>
+                          <textarea id="editar-requisitos" name="requisitos" rows="4" class="form-control" required></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Modal para eliminar empleo -->
+  <div class="modal fade" id="eliminarEmpleo" tabindex="-1" aria-labelledby="eliminarEmpleoLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="eliminarEmpleoLabel">¿ESTÁ SEGURO EN ELIMINAR ESTE EMPLEO?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <p>¿Está seguro de que desea eliminar todo el contenido del empleo? Esta acción es irreversible y se perderán todos los datos de ella.</p>
+                  <input type="hidden" id="empleoIdEliminar" value="">
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
+              </div>
+          </div>
+      </div>
+  </div>
 
 
-<!-- sección de mensajes mensajes -->
-<div class="info" id="infoMessage" style="display: none;">
-    <div class="info__icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
-          <path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path>
-        </svg>
-    </div>
-    <div class="info__title"><?php echo $message; ?></div>
-    <div class="info__close">
-        <svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
-          <path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path>
-        </svg>
-    </div>
-</div>
-
-<div class="error" id="ErrorMessage" style="display: none;">
-    <div class="error__icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
-            <path fill="#393a37" d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"></path>
-        </svg>
-    </div>
-    <div class="error__title"><?php echo $messagError; ?></div>
-    <div class="error__close">
-        <svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
-            <path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path>
-        </svg>
-    </div>
-</div>
-
-<script src="js/noticias2.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="js/administracion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-<footer class="text-center mt-4">
-  <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
-</footer>
+  <footer class="text-center mt-4">
+    <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
+  </footer>
 
-</body>
-
-<script>
-  function showMessage() {
-      document.getElementById('infoMessage').style.display = 'flex';
-  }
-  document.querySelector('.info__close').addEventListener('click', function() {
-      document.getElementById('infoMessage').style.display = 'none';
-  });
-  // Llama a la función showMessage() si hay un mensaje PHP
-  <?php if (isset($message) && !empty($message)): ?>
-      showMessage();
-  <?php endif; ?>
-</script>
-
-<script>
-  function showMessageError() {
-      document.getElementById('ErrorMessage').style.display = 'flex';
-  }
-  document.querySelector('.error__close').addEventListener('click', function() {
-      document.getElementById('ErrorMessage').style.display = 'none';
-  });
-  // Llama a la función showMessage() si hay un mensaje PHP
-  <?php if (isset($messagError) && !empty($messagError)): ?>
-    howMessageError();
-  <?php endif; ?>
-</script>
-
-<script>
-  function openEditModal(id, titulo, contenido) {
-    document.getElementById('id_contenido').value = id;
-    document.getElementById('titulo').value = titulo;
-    document.getElementById('contenido').value = contenido;
-    document.getElementById('editModal').style.display = 'block';
-  }
-
-  function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-  }
-
-  // Example usage with a button to open the modal
-  document.querySelectorAll('.edit-button').forEach(button => {
-    button.addEventListener('click', function() {
-      const id = this.getAttribute('data-id');
-      const titulo = this.getAttribute('data-titulo');
-      const contenido = this.getAttribute('data-contenido');
-      openEditModal(id, titulo, contenido);
-    });
-  });
-</script>
-
-<script>
-  document.getElementById('agregarNoticia').addEventListener('click', function(event) {
-    event.preventDefault();
-    document.getElementById('contenedorBolsaTrabajo').style.display = 'none'; // Ocultar otra sección
-    document.getElementById('contenedorNoticia').style.display = 'block'; // Mostrar esta sección
-  });
-
-  document.getElementById('crearEmpleo').addEventListener('click', function(event) {
+  <script>
+    document.getElementById('agregarNoticia').addEventListener('click', function(event) {
       event.preventDefault();
-      document.getElementById('contenedorNoticia').style.display = 'none'; // Ocultar otra sección
-      document.getElementById('contenedorBolsaTrabajo').style.display = 'block'; // Mostrar esta sección
-  });
+      document.getElementById('contenedorBolsaTrabajo').style.display = 'none'; // Ocultar otra sección
+      document.getElementById('contenedorEmpleos').style.display = 'none'; // Ocultar otra sección
+      document.getElementById('contenedorNoticia').style.display = 'block'; // Mostrar esta sección
+    });
 
-</script>
+    document.getElementById('crearEmpleo').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('contenedorNoticia').style.display = 'none'; // Ocultar otra sección
+        document.getElementById('contenedorEmpleos').style.display = 'none'; // Ocultar otra sección
+        document.getElementById('contenedorBolsaTrabajo').style.display = 'block'; // Mostrar esta sección
+    });
 
+    document.getElementById('mostrarEmpleos').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('contenedorNoticia').style.display = 'none'; // Ocultar otra sección
+        document.getElementById('contenedorBolsaTrabajo').style.display = 'none'; // Ocultar otra sección
+        document.getElementById('contenedorEmpleos').style.display = 'block'; // Mostrar esta sección
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var empleoIdEliminar;
+
+      // Capturar el ID del empleo al abrir el modal
+      document.querySelectorAll('.bin-button').forEach(button => {
+          button.addEventListener('click', function() {
+              empleoIdEliminar = this.getAttribute('data-id');
+              document.getElementById('empleoIdEliminar').value = empleoIdEliminar;
+          });
+      });
+
+      // Manejar la eliminación del empleo
+      document.getElementById('confirmarEliminar').addEventListener('click', function() {
+          var id = document.getElementById('empleoIdEliminar').value;
+
+          // Lógica para eliminar el empleo
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'administracion.php', true);
+          xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          xhr.onload = function () {
+              if (xhr.status === 200) {
+                  // Redirigir o actualizar la página después de la eliminación
+                  window.location.href = 'administracion.php';
+              } else {
+                  alert('Error al eliminar el empleo.');
+              }
+          };
+          xhr.send('id=' + id);
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Capturar el evento al hacer clic en el botón de editar
+      document.querySelectorAll('.edit-button').forEach(button => {
+          button.addEventListener('click', function() {
+              var empleoId = this.getAttribute('data-id');
+              var puesto = this.getAttribute('data-puesto');
+              var ubicacion = this.getAttribute('data-ubicacion');
+              var descripcion = this.getAttribute('data-descripcion');
+              var requisitos = this.getAttribute('data-requisitos');
+
+              // Asignar los valores a los campos del modal
+              document.getElementById('editar-empleo-id').value = empleoId;
+              document.getElementById('editar-puesto').value = puesto;
+              document.getElementById('editar-ubicacion').value = ubicacion;
+              document.getElementById('editar-descripcion').value = descripcion;
+              document.getElementById('editar-requisitos').value = requisitos;
+          });
+      });
+    });
+
+  </script>
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var noticiaIdEliminar;
+
+          // Capturar el ID de la noticia al abrir el modal
+          document.querySelectorAll('.bin-button').forEach(button => {
+              button.addEventListener('click', function() {
+                  noticiaIdEliminar = this.getAttribute('data-id');
+                  document.getElementById('noticiaIdEliminar').value = noticiaIdEliminar;
+              });
+          });
+
+          // Manejar la eliminación de la noticia
+          document.getElementById('confirmarEliminarNoticia').addEventListener('click', function() {
+              var id = document.getElementById('noticiaIdEliminar').value;
+
+              // Enviar el formulario para eliminar la noticia
+              var form = document.createElement('form');
+              form.method = 'POST';
+              form.action = 'obj/noticia.php';
+
+              var input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = 'eliminarNoticiaId';
+              input.value = id;
+
+              form.appendChild(input);
+              document.body.appendChild(form);
+              form.submit();
+          });
+      });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.edit-button').forEach(button => {
+          button.addEventListener('click', function() {
+              var noticiaId = this.getAttribute('data-id');
+              var titulo = this.getAttribute('data-titulo');
+              var contenido = this.getAttribute('data-contenido');
+
+              document.getElementById('editar-noticia-id').value = noticiaId;
+              document.getElementById('editar-titulo').value = titulo;
+              document.getElementById('editar-contenido').value = contenido;
+          });
+      });
+    });
+
+  </script>
+</body>
 </html>
