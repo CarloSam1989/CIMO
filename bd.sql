@@ -65,3 +65,8 @@ CREATE TABLE `aplicar_empleo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `carrusel`;
+CREATE TABLE `carrusel` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `ruta_imagen` VARCHAR(255) NOT NULL
+);
