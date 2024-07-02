@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bolsa de Trabajo</title>
+    <title>Bacantes de Trabajo</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bolsa_trabajo.css">
     <link rel="stylesheet" href="css/menu.css">
@@ -31,7 +31,13 @@
                     <ul class="navbar-nav me-auto">
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="administracion.php">Administración</a>
+                                <a class="nav-link" href="crear_Noticias.php">Crear Noticias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="crear_Empleo.php">Crear Empleo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="slider.php">Slider</a>
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
@@ -129,6 +135,5 @@
             aplicarEmpleoModal.show();
         }
     </script>
-
 </body>
 </html>

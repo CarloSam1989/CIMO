@@ -17,7 +17,7 @@ class CrearNoticia {
         if ($stmt->execute()) {
             $stmt->close();
             $database->closeConnection();
-            echo "<script>window.location.href = '../administracion.php';</script>";
+            echo "<script>window.location.href = '../crear_Noticias.php';</script>";
 
             exit();
         } else {
@@ -41,7 +41,7 @@ class EliminarNoticia {
         if ($stmt->execute()) {
             $stmt->close();
             $database->closeConnection();
-            echo "<script>window.location.href = '../administracion.php';</script>";
+            echo "<script>window.location.href = '../crear_Noticias.php';</script>";
 
             exit();
         } else {
@@ -142,7 +142,7 @@ class EditarNoticia {
         if ($stmt->execute()) {
             $stmt->close();
             $database->closeConnection();
-            echo "<script>window.location.href = '../administracion.php';</script>";
+            echo "<script>window.location.href = '../crear_Noticias.php';</script>";
 
             exit();
         } else {
@@ -209,7 +209,7 @@ class TarjetaNoticiaPrincipal {
                 }
                 echo '</div>';
                 echo '<p class="card-title text-primary">' . htmlspecialchars($row["titulo"]) . '</p>';
-                echo '<p class="card-body">' . htmlspecialchars(substr($row["cuerpo"], 0, 100)) . '... <a href="noticias.php">Leer más</a></p>';
+                echo '<p class="card-body">' . htmlspecialchars(substr($row["cuerpo"], 0, 100)) . '... <a href="mostrar_Noticias.php">Leer más</a></p>';
                 echo '<p class="footer">';
                 echo '<span class="date">' . htmlspecialchars(date("d/m/Y", strtotime($row["fecha_creacion"]))) . '</span>';
                 echo '</p>';

@@ -35,7 +35,7 @@ class EmpleosInsertar {
         if ($stmt->execute()) {
             $stmt->close();
             $database->closeConnection();
-            echo "<script>window.location.href = 'administracion.php';</script>";
+            echo "<script>window.location.href = 'crear_Empleo.php';</script>";
 
             exit();
         } else {
@@ -56,9 +56,9 @@ class EmpleosEliminar {
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {
-            $stmt->close();
+            $stmt->close(); 
             $database->closeConnection();
-            echo "<script>window.location.href = 'administracion.php';</script>";
+            echo "<script>window.location.href = '../crear_Empleo.php';</script>";
 
             exit();
         } else {
@@ -81,7 +81,7 @@ class EmpleosActualizar {
         if ($stmt->execute()) {
             $stmt->close();
             $database->closeConnection();
-            echo "<script>window.location.href = 'administracion.php';</script>";
+            echo "<script>window.location.href = 'crear_Empleo.php';</script>";
             exit();
         } else {
             echo "Error al actualizar el empleo: " . $conn->error;

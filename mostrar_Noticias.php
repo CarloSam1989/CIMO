@@ -17,11 +17,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header>
+    
+    <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-                <a class="navbar-brand" href="#">CIMO</a>
+                <a class="navbar-brand" href="index.php">CIMO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -29,11 +30,20 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">Inicio</a>
+                            <a class="nav-link" href="bolsa.php">Aplicar Empleo</a>
                         </li>
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="administracion.php">Administración</a>
+                                <a class="nav-link" href="crear_Noticias.php">Crear Noticias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="crear_Empleo.php">Crear Empleo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="slider.php">Slider</a>
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
@@ -69,7 +79,7 @@
 
             </div>
         </nav>
-    </header>   
+    </header>
 
     <main class="container mt-4">
         <h1 class="text-center mb-4">Noticias</h1>

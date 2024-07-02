@@ -37,10 +37,13 @@
                         </li>
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="administracion.php">Administración</a>
+                                <a class="nav-link" href="crear_Noticias.php">Crear Noticia</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contactos</a>
+                                <a class="nav-link" href="crear_Empleo.php">Crear Empleo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="slider.php">Slider</a>
