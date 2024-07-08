@@ -1,9 +1,10 @@
 
 <?php
-$servername = "tu_servidor";
-$username = "tu_usuario";
-$password = "tu_contraseña";
-$dbname = "tu_base_de_datos";
+session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cimo";
 
 try {
     $conn = new mysqli($servername, $username, $password, $dbname);
