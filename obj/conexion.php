@@ -1,10 +1,8 @@
-
 <?php
-session_start();
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "cimo";
+$servername = "tu_servidor";
+$username = "tu_usuario";
+$password = "tu_contraseña";
+$dbname = "tu_base_de_datos";
 
 try {
     $conn = new mysqli($servername, $username, $password, $dbname);
