@@ -28,6 +28,7 @@ function login($usuario, $pass) {
 
         // Comparar la contraseña en texto plano con la encriptada
         if (md5($pass) == $hashed_password) {
+            session_start();
             $_SESSION['id'] = $id;
             return true;
         }
@@ -35,8 +36,9 @@ function login($usuario, $pass) {
     return false;
 }
 
+session_start();
+
 function verificar_sesion() {
-   
     if (!isset($_SESSION['id'])) {
         return 0;
     } else {
@@ -44,4 +46,3 @@ function verificar_sesion() {
     }
 }
 ?>
-
