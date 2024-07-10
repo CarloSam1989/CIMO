@@ -100,7 +100,7 @@
             <div class="row">
             <?php
                 include 'obj/bd.php';
-                include 'obj/conexion.php'
+                include 'obj/config.php'
 
                 ?>
             </div>
