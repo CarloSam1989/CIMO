@@ -123,7 +123,6 @@ class NoticiasTabla {
     }
 }
 
-
 class EditarNoticia {
     public function actualizarNoticia($id, $titulo, $contenido, $foto = null) {
         $database = new DatabaseConnection();
@@ -153,6 +152,7 @@ class EditarNoticia {
         }
     }
 }
+
 class TarjetaMostrarNoticia {
     public function mostrarNoticias() {
         $database = new DatabaseConnection();
@@ -189,6 +189,7 @@ class TarjetaMostrarNoticia {
         $database->closeConnection();
     }
 }
+
 class TarjetaNoticiaPrincipal {
     public function mostrarNoticias() {
         $database = new DatabaseConnection();

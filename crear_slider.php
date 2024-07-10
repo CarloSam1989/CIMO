@@ -1,33 +1,29 @@
-<?php 
- include_once 'obj/bd.php';
- require_once 'obj/crear_slider.php';
- require_once 'obj/crudNoticia.php';
+<?php
+    include_once 'obj/bd.php';
+    require_once 'obj/crear_slider.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIMO</title>
-    <!-- fuente de google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-    <!-- Resto de css -->
+    <title>Crear Slider</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/main.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/buttons.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/noticias.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/layout.css">
+    <link rel="stylesheet" href="css/css_noticia_admin/variables.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
-    <link rel="stylesheet" href="css/carrusel.css">
-    <link rel="stylesheet" href="css/cuerpo.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-                <a class="navbar-brand" href="#">CIMO</a>
+                <a class="navbar-brand" href="index.php">CIMO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -86,73 +82,91 @@
             </div>
         </nav>
     </header>
-        
-    <div class="carousel-container">
-    <div class="carousel-title md-4">Colegio de Ingenieros Mecánicos de El Oro (CIMO)</div>
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-        <?php
-            $slider = new MostrarSlider();
-            echo $slider->generarSliderHTML();
-        ?>
+    <main class="container text_center mt-4">
+
+        <div class="table-responsive">
+            <div class="table-header">
+                <h2>Slaider</h2>
+                <button class="agregar" type="button" data-bs-toggle="modal" data-bs-target="#subirImagen">
+                <span class="agregar__text">Nuevo</span>
+                <span class="agregar__icon">
+                    <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="12" x2="12" y1="5" y2="19"></line>
+                    <line x1="5" x2="19" y1="12" y2="12"></line>
+                    </svg>
+                </span>
+                </button>
+            </div>
+            
+            <?php
+                $carruselTabla = new CarruselTabla();
+                $carruselTabla->mostrarImagenes();
+            ?>   
+    </div>   
+
+    </main>
+    
+  <!-- Modal para subir una imagen -->
+  <div class="modal fade" id="subirImagen" tabindex="-1" aria-labelledby="crearsalider" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="jobFormModalLabel">Agregar imagen al Slider</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <form action="obj/crear_slider.php" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">Imagen:</label>
+                        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </form>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Modal para eliminar imagen -->
+  <div class="modal fade" id="eliminarImagen" tabindex="-1" aria-labelledby="eliminarImagenLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="obj/crear_slider.php" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eliminarImagenLabel">¿ESTÁ SEGURO EN ELIMINAR ESTA IMAGEN?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar esta imagen? Esta acción es irreversible y se perderán todos los datos de ella.</p>
+                    <input type="hidden" id="imagenIdEliminar" name="imagenIdEliminar" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
+                </div>
+            </form>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </div>
 
-    <main>
-        <section class="section-cards">
-        <?php
-        $tarjetasNoticiasPrincipales = new TarjetaNoticiaPrincipal();
-        $tarjetasNoticiasPrincipales->mostrarNoticias();
-        ?>    
-        </section>        
-    </main>
 
-    <footer class="bg-dark text-light">
-        <div class="row footer-content">
-            <div class="col-12 col-lg-8 order-lg-2">
-                <p class="lorem-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Praesent euismod, nisl sit amet consectetur sagittis, nunc nulla aliquet urna,
-                    non tincidunt massa eros a tortor. Curabitur vehicula libero nec libero ultricies, 
-                    a cursus erat laoreet.Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                    Quasi reprehenderit, iure ipsam maxime veritatis nihil optio quas eum cum molestias 
-                    veniam fugit similique ipsum earum, esse sapiente vel, explicabo qui?
-                    Doloribus esse iste, eaque consectetur fugit omnis! Consequuntur assumenda, sit, repudiandae, 
-                    libero voluptas eveniet nihil esse molestias tenetur consectetur praesentium voluptate 
-                    inventore quos incidunt consequatur numquam ipsum placeat natus quaerat!
-                </p>
-            </div>
-            <div class="col-12 col-lg-4 order-lg-1">
-                <form class="form">
-                    <p class="form-title">Suscribete con nosotros</p>
-                    <div class="input-container">
-                        <input type="email" placeholder="Ingrese su email">
-                        <span></span>
-                    </div>
-                    <div class="input-container">
-                        <input type="text" placeholder="Ingrese su nombre">
-                    </div>
-                    <button type="submit" class="submit">
-                        Suscribirse
-                    </button>
-                </form>
-            </div>
-        </div>
-        <p class="footer-copyright">&copy; 2024 CIMO. Todos los derechos reservados.</p>
+    <footer class="text-center mt-4">
+        <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <script src="js/carrusel.js"></script>
     <script src="js/boton.js"></script>
-    
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var eliminarButtons = document.querySelectorAll('.bin-button');
+    eliminarButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var id = button.getAttribute('data-id');
+            document.getElementById('imagenIdEliminar').value = id;
+        });
+    }); 
+});
+</script>
 </body>
 </html>

@@ -22,23 +22,30 @@
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-                <a class="navbar-brand" href="index.php">CIMO</a>
+                <a class="navbar-brand" href="#">CIMO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <?php include_once('obj/bd.php'); ?>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="bolsa.php">Bolsa de trabajo</a>
+                        </li>
                         <?php if (verificar_sesion()): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="crear_Noticias.php">Crear Noticias</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="crear_Empleo.php">Crear Empleo</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="slider.php">Slider</a>
-                            </li>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
+                            <div class="dropdown-menu" data-bs-popper="static">
+                                <a class="dropdown-item" href="crear_Noticias.php">Crear Nueva Noticia</a>
+                                <a class="dropdown-item" href="mostrar_noticias.php">Noticias Creadas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="crear_Empleo.php">Crear Empleo</a>
+                                <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="crear_slider.php">Slider</a>
+                                
+                            </div>
+                        </li>
                         <?php else: ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="login.html">Login</a>
