@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
@@ -43,7 +42,8 @@
                                 <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="crear_slider.php">Slider</a>
-                                
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="crear_Usuario.php">Crear Usuario</a>
                             </div>
                         </li>
                         <?php else: ?>

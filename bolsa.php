@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <img src="img/logocimo.ico" alt="Logo" class="navbar-logo">
-                <a class="navbar-brand" href="#">CIMO</a>
+                <a class="navbar-brand" href="index.php">CIMO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -43,7 +43,8 @@
                                 <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="crear_slider.php">Slider</a>
-                                
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="crear_Usuario.php">Crear Usuario</a>
                             </div>
                         </li>
                         <?php else: ?>

@@ -48,7 +48,8 @@
                                 <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="crear_slider.php">Slider</a>
-                                
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="crear_Usuario.php">Crear Usuario</a>
                             </div>
                         </li>
                         <?php else: ?>

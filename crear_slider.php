@@ -44,7 +44,8 @@
                                 <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="crear_slider.php">Slider</a>
-                                
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="crear_Usuario.php">Crear Usuario</a>
                             </div>
                         </li>
                         <?php else: ?>
@@ -86,7 +87,7 @@
 
         <div class="table-responsive">
             <div class="table-header">
-                <h2>Slaider</h2>
+                <h2>Slider</h2>
                 <button class="agregar" type="button" data-bs-toggle="modal" data-bs-target="#subirImagen">
                 <span class="agregar__text">Nuevo</span>
                 <span class="agregar__icon">
