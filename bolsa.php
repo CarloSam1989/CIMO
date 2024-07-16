@@ -29,25 +29,37 @@
                 <?php include_once('obj/bd.php'); ?>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="bolsa.php">Bolsa de trabajo</a>
-                        </li>
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
-                            <div class="dropdown-menu" data-bs-popper="static">
-                                <a class="dropdown-item" href="crear_Noticias.php">Crear Nueva Noticia</a>
-                                <a class="dropdown-item" href="mostrar_noticias.php">Noticias Creadas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="crear_Empleo.php">Crear Empleo</a>
-                                <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="crear_slider.php">Slider</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="crear_Usuario.php">Crear Usuario</a>
-                            </div>
-                        </li>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Noticias</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_Noticias.php">Crear Nueva Noticia</a>
+                                    <a class="dropdown-item" href="mostrar_noticias.php">Noticias Creadas</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bolsa de trabajo</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_Empleo.php">Crear Empleo</a>
+                                    <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Slaider</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_slider.php">Cargar imágenes</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuarios</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_Usuario.php">Administrar Usuarios</a>
+                                </div>
+                            </li>
                         <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="bolsa.php">Bolsa de trabajo</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="login.html">Login</a>
                             </li>
@@ -82,7 +94,6 @@
             </div>
         </nav>
     </header>
-
     <main class="container mt-4">
         <h1 class="text-center mb-4">Buscamos Candidatos para:</h1>
 

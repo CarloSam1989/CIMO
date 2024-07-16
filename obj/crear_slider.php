@@ -1,5 +1,5 @@
 <?php
-require_once 'crudBolsa.php'; // Ajusta la ruta según tu estructura de archivos
+require_once 'crudBolsa.php';
 
 if (!class_exists('DatabaseConnection')) {
     die('La clase DatabaseConnection no se pudo importar correctamente.');
@@ -28,7 +28,7 @@ class CrearImagen {
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] == 0) {
-        $target_dir = "../uploads/"; // Asegúrate de que esta ruta es correcta y tiene permisos de escritura
+        $target_dir = "../uploads/";
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
                 $imagen = new CrearImagen();
-                $imagen->insertarImagen(basename($target_file)); // Solo el nombre del archivo
+                $imagen->insertarImagen(basename($target_file));
             } else {
                 echo "Lo siento, hubo un error al subir tu archivo.";
             }

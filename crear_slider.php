@@ -30,25 +30,37 @@
                 <?php include_once('obj/bd.php'); ?>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="bolsa.php">Bolsa de trabajo</a>
-                        </li>
                         <?php if (verificar_sesion()): ?>
                             <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrar</a>
-                            <div class="dropdown-menu" data-bs-popper="static">
-                                <a class="dropdown-item" href="crear_Noticias.php">Crear Nueva Noticia</a>
-                                <a class="dropdown-item" href="mostrar_noticias.php">Noticias Creadas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="crear_Empleo.php">Crear Empleo</a>
-                                <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="crear_slider.php">Slider</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="crear_Usuario.php">Crear Usuario</a>
-                            </div>
-                        </li>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Noticias</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_Noticias.php">Crear Nueva Noticia</a>
+                                    <a class="dropdown-item" href="mostrar_noticias.php">Noticias Creadas</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bolsa de trabajo</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_Empleo.php">Crear Empleo</a>
+                                    <a class="dropdown-item" href="mostrar_Bacantes.php">Mostrar Bacantes</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Slaider</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_slider.php">Cargar imágenes</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuarios</a>
+                                <div class="dropdown-menu" data-bs-popper="static">
+                                    <a class="dropdown-item" href="crear_Usuario.php">Administrar Usuarios</a>
+                                </div>
+                            </li>
                         <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="bolsa.php">Bolsa de trabajo</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="login.html">Login</a>
                             </li>
@@ -107,49 +119,48 @@
 
     </main>
     
-  <!-- Modal para subir una imagen -->
-  <div class="modal fade" id="subirImagen" tabindex="-1" aria-labelledby="crearsalider" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="jobFormModalLabel">Agregar imagen al Slider</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-              <form action="obj/crear_slider.php" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="imagen" class="form-label">Imagen:</label>
-                        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Crear</button>
-                </form>
-
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- Modal para eliminar imagen -->
-  <div class="modal fade" id="eliminarImagen" tabindex="-1" aria-labelledby="eliminarImagenLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="obj/crear_slider.php" method="post">
+    <!-- Modal para subir una imagen -->
+    <div class="modal fade" id="subirImagen" tabindex="-1" aria-labelledby="crearsalider" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eliminarImagenLabel">¿ESTÁ SEGURO EN ELIMINAR ESTA IMAGEN?</h5>
+                    <h5 class="modal-title" id="jobFormModalLabel">Agregar imagen al Slider</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Está seguro de que desea eliminar esta imagen? Esta acción es irreversible y se perderán todos los datos de ella.</p>
-                    <input type="hidden" id="imagenIdEliminar" name="imagenIdEliminar" value="">
+                <form action="obj/crear_slider.php" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="imagen" class="form-label">Imagen:</label>
+                            <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </form>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-
+    <!-- Modal para eliminar imagen -->
+    <div class="modal fade" id="eliminarImagen" tabindex="-1" aria-labelledby="eliminarImagenLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="obj/crear_slider.php" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eliminarImagenLabel">¿ESTÁ SEGURO EN ELIMINAR ESTA IMAGEN?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Está seguro de que desea eliminar esta imagen? Esta acción es irreversible y se perderán todos los datos de ella.</p>
+                            <input type="hidden" id="imagenIdEliminar" name="imagenIdEliminar" value="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
 
     <footer class="text-center mt-4">
         <p>&copy; 2024 BCDGJS. Todos los derechos reservados.</p>
