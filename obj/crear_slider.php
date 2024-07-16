@@ -29,6 +29,10 @@ class CrearImagen {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] == 0) {
         $target_dir = "../uploads/"; // Asegúrate de que esta ruta es correcta y tiene permisos de escritura
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
         $target_file = $target_dir . basename($_FILES["imagen"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -55,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
                 $imagen = new CrearImagen();
-                $imagen->insertarImagen($target_file);
+                $imagen->insertarImagen(basename($target_file)); // Solo el nombre del archivo
             } else {
                 echo "Lo siento, hubo un error al subir tu archivo.";
             }
@@ -64,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "No se ha enviado ninguna imagen o hubo un error en la subida.";
     }
 }
+
 class CarruselTabla {
     public function mostrarImagenes() {
         $database = new DatabaseConnection();
