@@ -1,0 +1,61 @@
+body {
+    position: relative;
+    background: url('../img/fondo/fondo.png') no-repeat center center fixed; /* Asegúrate de ajustar la ruta a tu imagen */
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Ajusta el color y la opacidad según sea necesario */
+    z-index: 0;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 40px;
+    padding-top: 100px; /* Ajusta para crear espacio para la imagen */
+    width: 90%;
+    max-width: 500px; /* Ajusta el tamaño máximo del formulario */
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto; /* Centrar el contenedor */
+}
+
+.image-container {
+    position: absolute;
+    top: -70px; /* Ajusta para mover la imagen encima de la tarjeta */
+    left: 50%;
+    transform: translateX(-30%); /* Ajusta para centrar mejor la imagen */
+    z-index: 2; /* Asegura que la imagen quede por delante */
+}
+
+.card-title {
+    margin-top: 70px; /* Ajusta para bajar el título */
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        padding: 30px;
+        padding-top: 80px; /* Ajusta para crear espacio para la imagen en pantallas más pequeñas */
+    }
+
+    .card-title {
+        margin-top: 50px; /* Ajusta para bajar el título en pantallas más pequeñas */
+    }
+}

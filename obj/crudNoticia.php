@@ -168,7 +168,7 @@ class TarjetaMostrarNoticia {
                 echo '<h2 class="text-center">' . htmlspecialchars($row["titulo"]) . '</h2>';
                 echo '</div>';
                 echo '<div class="tarjeta_body">';
-                echo '<p class="card-text">' . htmlspecialchars(substr($row["cuerpo"], 0, 100)) . '...</p>';
+                echo '<p class="card-text">' . htmlspecialchars($row["cuerpo"]) . '</p>';
                 echo '<div class="image">';
                 if ($row['foto']) {
                     echo '<img src="uploads/' . htmlspecialchars($row["foto"]) . '" alt="Imagen de la noticia">';

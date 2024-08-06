@@ -6,31 +6,39 @@
     <title>CIMO</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="img/logocimo.ico">
-    <link rel="stylesheet" href="css/error.css"> <!-- Enlace al archivo CSS de errores -->
+    <link rel="stylesheet" href="css/error.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card p-4 shadow login-container" style="width: 100%; max-width: 400px;">
-            <div class="text-center mb-4">
-                <img class="img-rounded" src="img/logocimo.ico" style="width: 50%;" class="shadow-sm">
+        <div class="position-relative" style="width: 100%; max-width: 400px;">
+            <div class="image-container">
+                <img class="img-rounded" src="img/logocimo.ico" style="width: 60%;" class="shadow-sm">
             </div>
-            <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
-            <form action="obj/login.php" method="post">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label" style="font-weight: bold;"><strong>Dirección de correo electrónico</strong></label>
-                    <input type="email" class="form-control" name="usuario" aria-describedby="emailHelp" placeholder="">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label" style="font-weight: bold;">Contraseña</label>
-                    <input type="password" class="form-control" name="pass" placeholder="" autocomplete="off">
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary" style="padding: 10px; width: 60%; border-radius: 20px; font-size: 125%;">Entrar</button>
-                </div>
-            </form>
+            <div class="card p-4 shadow login-container">
+                <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
+                <!-- Formulario de inicio de sesión -->
+                <form action="obj/login.php" method="post">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label"><strong>Dirección de correo electrónico</strong></label>
+                        <input type="email" class="form-control" name="usuario" aria-describedby="emailHelp" placeholder="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label"><strong>Contraseña</strong></label>
+                        <input type="password" class="form-control" name="pass" placeholder="" autocomplete="off">
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3 p-1">
+                        <div class="d-grid gap-2 col-12 mx-auto">
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
+    
+    
      <!-- Modal de Error -->
      <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
